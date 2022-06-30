@@ -1,3 +1,7 @@
+/* Customized Bootstrap Theming */
+.bg-dark {
+  background-color: #282c34 !important;
+}
 @keyframes cursor-blink {
   0% {
     opacity: 0;
@@ -6,7 +10,6 @@
 body,
 head {
   color: #abb2c0;
-  background-color: #282c34;
 }
 body .navbar a:link,
 head .navbar a:link,
