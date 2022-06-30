@@ -2,14 +2,13 @@
 .bg-dark {
   background-color: #282c34 !important;
 }
+.text-light {
+  color: #abb2c0 !important;
+}
 @keyframes cursor-blink {
   0% {
     opacity: 0;
   }
-}
-body,
-head {
-  color: #abb2c0;
 }
 body .navbar a:link,
 head .navbar a:link,
