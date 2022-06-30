@@ -1,5 +1,11 @@
 @font-color: #abb2c0;
 @link-color: #ff69b4;
+@bg-dark: #282c34;
+
+/* Customized Bootstrap Theming */
+.bg-dark {
+  background-color: @bg-dark !important;
+}
 
 @keyframes cursor-blink {
   0% {
@@ -10,7 +16,6 @@
 body,
 head {
   color: @font-color;
-  background-color: #282c34;
 
   .navbar {
     a:link,
