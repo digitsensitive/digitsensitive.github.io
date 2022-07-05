@@ -1,6 +1,7 @@
 @font-color: #abb2c0;
 @link-color: #ff69b4;
 @bg-dark: #282c34;
+@bg-code: #212529;
 
 /* Customized Bootstrap Theming */
 .bg-dark {
@@ -30,14 +31,14 @@ div {
 }
 
 .chroma {
-  color: #f8f8f2;
-  background-color: #1b1d23;
+  color: @font-color;
+  background-color: @bg-code;
   border-radius: 10px;
   padding: 10px;
 }
 
 code {
-  font-size: 0.875em;
+  font-size: 1em;
   color: @link-color;
   word-wrap: break-word;
 }
