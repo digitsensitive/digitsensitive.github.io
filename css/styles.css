@@ -19,14 +19,12 @@ div pre {
   word-break: break-word;
 }
 .chroma {
-  color: #abb2c0;
   background-color: #212529;
   border-radius: 10px;
   padding: 10px;
 }
 code {
   font-size: 1em;
-  color: #ff69b4;
   word-wrap: break-word;
 }
 body .navbar a:link,
