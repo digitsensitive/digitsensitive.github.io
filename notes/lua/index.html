@@ -1,0 +1,221 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="initial-scale=1,width=device-width"><link crossorigin=anonymous href=https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css integrity=sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor rel=stylesheet><script crossorigin=anonymous integrity=sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2 src=https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js></script>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css><link href=/favicon.ico rel=icon><link rel=stylesheet href=/css/syntax.css><link rel=stylesheet href=/css/styles.css><title>digitsensitive</title></head><body class="p-3 bg-dark"><nav class="navbar navbar-dark navbar-expand-lg"><div class=container-fluid><a class=navbar-brand href=/>Hello</a>
+<button aria-controls=navbar aria-expanded=false aria-label="Toggle navigation" class=navbar-toggler data-bs-target=#navbar data-bs-toggle=collapse type=button>
+<span class=navbar-toggler-icon></span></button><div class="collapse navbar-collapse" id=navbar><ul class="navbar-nav ml-auto"><li class=nav-item><a class=nav-link href=/about/ title>About</a></li><li class=nav-item><a class=nav-link href=/notes/ title>Notes</a></li><li class=nav-item><a class=nav-link href=/posts/ title>Posts</a></li></ul></div></div></nav><div class="container text-light py-4 mx-auto" style=max-width:600px><h1>Lua</h1><h6>July 10, 2022</h6><div class=mt-4><h2 id=table-of-contents>Table of Contents</h2><p>Table of contents generated with
+<a href=http://ecotrust-canada.github.io/markdown-toc>markdown-toc</a>.</p><ul><li><a href=#comments>Comments</a></li><li><a href=#variables>Variables</a></li><li><a href=#operators>Operators</a><ul><li><a href=#relational-operators>Relational operators</a></li><li><a href=#arithmetic-operators>Arithmetic operators</a></li><li><a href=#logic>Logic</a></li></ul></li><li><a href=#enumerations>Enumerations</a></li><li><a href=#tables-and-arrays>Tables and Arrays</a><ul><li><a href=#----index-and-----newindex>_ _index and _ _newindex</a></li></ul></li><li><a href=#loops>Loops</a><ul><li><a href=#the-numerical-for-loop>The numerical for loop</a></li></ul></li><li><a href=#conditionals>Conditionals</a></li><li><a href=#mathematical-functions>Mathematical Functions</a><ul><li><a href=#mathfloor-x->math.floor(x)</a></li><li><a href=#mathrandom--m----n--->math.random([m [, n]])</a></li><li><a href=#mathrandomseed---x----y--->math.randomseed ([x [, y]])</a></li><li><a href=#modulo>Modulo</a></li></ul></li><li><a href=#strings>Strings</a><ul><li><a href=#tostring-v->toString(v)</a></li><li><a href=#concatenation-of-strings>Concatenation of strings</a></li><li><a href=#stringformat>string.format</a></li></ul></li><li><a href=#api--tables>API: Tables</a></li><li><a href=#classes>Classes</a></li></ul><h2 id=comments>Comments</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=c1>-- simple one liner</span>
+</span></span><span class=line><span class=cl><span class=cm>--[[ multiline
+</span></span></span><span class=line><span class=cl><span class=cm>		 comment ]]</span>
+</span></span></code></pre></div><h2 id=variables>Variables</h2><p>In lua every variable is by default global, which is a historical decision.
+Nowadays this is considered bad practice (f.e. in moonscript everything is by
+default local).</p><p>In general you should always use <code>local</code>. Same goes for functions, which you can
+also declare as local.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kd>local</span> <span class=n>x</span> <span class=o>=</span> <span class=mi>4</span>
+</span></span><span class=line><span class=cl><span class=n>y</span><span class=p>,</span><span class=n>z</span> <span class=o>=</span> <span class=mi>4</span><span class=p>,</span><span class=mi>9</span>
+</span></span></code></pre></div><h2 id=operators>Operators</h2><h3 id=relational-operators>Relational operators</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=c1>-- equal to</span>
+</span></span><span class=line><span class=cl><span class=o>==</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>-- not equal to</span>
+</span></span><span class=line><span class=cl><span class=o>~=</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>-- greater than</span>
+</span></span><span class=line><span class=cl><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>-- less than</span>
+</span></span><span class=line><span class=cl><span class=o>&lt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>-- greater than or equal to</span>
+</span></span><span class=line><span class=cl><span class=o>&gt;=</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>-- less than or equal to</span>
+</span></span><span class=line><span class=cl><span class=o>&lt;=</span>
+</span></span></code></pre></div><h3 id=arithmetic-operators>Arithmetic operators</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=c1>-- Addition</span>
+</span></span><span class=line><span class=cl><span class=o>+</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>-- Subtraction</span>
+</span></span><span class=line><span class=cl><span class=o>-</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>-- Multiplication</span>
+</span></span><span class=line><span class=cl><span class=o>*</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>-- Division</span>
+</span></span><span class=line><span class=cl><span class=o>/</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>-- Modulus</span>
+</span></span><span class=line><span class=cl><span class=o>%</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>-- Exponent</span>
+</span></span><span class=line><span class=cl><span class=c1>-- Use the built-in `^` operator rather than the `math.pow()` function.</span>
+</span></span><span class=line><span class=cl><span class=o>^</span>
+</span></span></code></pre></div><h3 id=logic>Logic</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kc>nil</span> <span class=ow>and</span> <span class=kc>false</span>  <span class=c1>--&gt; nil</span>
+</span></span><span class=line><span class=cl><span class=kc>false</span> <span class=ow>and</span> <span class=kc>nil</span>  <span class=c1>--&gt; false</span>
+</span></span><span class=line><span class=cl><span class=mi>0</span> <span class=ow>and</span> <span class=mi>20</span>       <span class=c1>--&gt; 20</span>
+</span></span><span class=line><span class=cl><span class=mi>10</span> <span class=ow>and</span> <span class=mi>20</span>      <span class=c1>--&gt; 20</span>
+</span></span></code></pre></div><h2 id=enumerations>Enumerations</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kd>local</span> <span class=n>COLORS</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>BLUE</span> <span class=o>=</span> <span class=mi>1</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=n>GREEN</span> <span class=o>=</span> <span class=mi>2</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=n>RED</span> <span class=o>=</span> <span class=mi>3</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>-- the above is equivalent to</span>
+</span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>COLORS</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=p>[</span><span class=s2>&#34;BLUE&#34;</span><span class=p>]</span> <span class=o>=</span> <span class=mi>1</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=p>[</span><span class=s2>&#34;GREEN&#34;</span><span class=p>]</span> <span class=o>=</span> <span class=mi>2</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=p>[</span><span class=s2>&#34;RED&#34;</span><span class=p>]</span> <span class=o>=</span> <span class=mi>3</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>-- reading the integer back</span>
+</span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>color</span> <span class=o>=</span> <span class=n>COLORS.RED</span> <span class=c1>-- the same as COLORS[&#34;RED&#34;]</span>
+</span></span></code></pre></div><h2 id=tables-and-arrays>Tables and Arrays</h2><p>Lua is descended from Sol, a language designed for petroleum engineers with no
+formal training in computer programming. People not trained in computing think
+it is damned weird to start counting at zero. By adopting <strong>1-based array</strong> and
+string indexing, the Lua designers avoided confounding the expectations of their
+first clients and sponsors.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=n>t</span> <span class=o>=</span> <span class=p>{}</span>
+</span></span><span class=line><span class=cl><span class=n>t</span> <span class=o>=</span> <span class=p>{</span> <span class=n>a</span> <span class=o>=</span> <span class=mi>1</span><span class=p>,</span> <span class=n>b</span> <span class=o>=</span> <span class=mi>2</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=n>t</span> <span class=o>=</span> <span class=p>{</span> <span class=p>[</span><span class=s2>&#34;hello&#34;</span><span class=p>]</span> <span class=o>=</span> <span class=mi>200</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>-- arrays are also tables</span>
+</span></span><span class=line><span class=cl><span class=n>array</span> <span class=o>=</span> <span class=p>{</span> <span class=s2>&#34;a&#34;</span><span class=p>,</span> <span class=s2>&#34;b&#34;</span><span class=p>,</span> <span class=s2>&#34;c&#34;</span><span class=p>,</span> <span class=s2>&#34;d&#34;</span><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=n>print</span><span class=p>(</span><span class=n>array</span><span class=p>[</span><span class=mi>1</span><span class=p>])</span>	<span class=c1>-- &#34;a&#34; (one-indexed)</span>
+</span></span><span class=line><span class=cl><span class=n>print</span><span class=p>(</span><span class=o>#</span><span class=n>array</span><span class=p>)</span>		<span class=c1>-- 4 (length)</span>
+</span></span></code></pre></div><p>Lua always creates new tables without metatables.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=n>t</span> <span class=o>=</span> <span class=p>{}</span>
+</span></span><span class=line><span class=cl><span class=n>print</span><span class=p>(</span><span class=n>getmetatable</span><span class=p>(</span><span class=n>t</span><span class=p>))</span> <span class=c1>--&gt; nil</span>
+</span></span></code></pre></div><p>We can use <code>setmetatable</code> to set or change the metatable of a table.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=n>t</span> <span class=o>=</span> <span class=p>{}</span>
+</span></span><span class=line><span class=cl><span class=n>meta</span> <span class=o>=</span> <span class=p>{}</span>
+</span></span><span class=line><span class=cl><span class=n>setmetatable</span><span class=p>(</span><span class=n>t</span><span class=p>,</span> <span class=n>meta</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>print</span><span class=p>(</span><span class=n>getmetatable</span><span class=p>(</span><span class=n>t</span><span class=p>)</span> <span class=o>==</span> <span class=n>meta</span><span class=p>)</span> <span class=c1>--&gt; true</span>
+</span></span></code></pre></div><p>A group of related tables can share a common metatable, which describes their
+common behavior; a table can be its own metatable, so that it describes its own
+individual behavior. Any configuration is valid.</p><h3 id=_-_index-and-_-_newindex>_ _index and _ _newindex</h3><p>Reading the content of the table. Note that the action is only triggered if the
+corresponding key is not present in the table.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=c1>-- first we want to set the __index method</span>
+</span></span><span class=line><span class=cl><span class=c1>-- this method gets called with the corresponding table and the used key</span>
+</span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>meta</span> <span class=o>=</span> <span class=p>{}</span>
+</span></span><span class=line><span class=cl><span class=n>meta.__index</span> <span class=o>=</span> <span class=kr>function</span><span class=p>(</span><span class=n>object</span><span class=p>,</span> <span class=n>index</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=n>print</span><span class=p>(</span><span class=n>string.format</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>		<span class=s2>&#34;the key &#39;%s&#39; is not present in object &#39;%s&#39;&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>		<span class=n>index</span><span class=p>,</span> <span class=n>object</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>  <span class=kr>return</span> <span class=o>-</span><span class=mi>1</span>
+</span></span><span class=line><span class=cl><span class=kr>end</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>-- create a testobject</span>
+</span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>t</span> <span class=o>=</span> <span class=p>{}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>-- set the metatable</span>
+</span></span><span class=line><span class=cl><span class=n>setmetatable</span><span class=p>(</span><span class=n>t</span><span class=p>,</span> <span class=n>meta</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>-- read a non-existend key</span>
+</span></span><span class=line><span class=cl><span class=c1>-- table[key] gets translated into meta.__index(table, key)</span>
+</span></span><span class=line><span class=cl><span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>[</span><span class=s2>&#34;foo&#34;</span><span class=p>])</span> <span class=c1>-- the key &#39;foo&#39; is not present in object  &#39;table: 0x600002e8d2c0&#39;</span>
+</span></span></code></pre></div><p>Writing the content of the table. Note that the action is only triggered if the
+corresponding key is not present in the table.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=c1>-- first we want to set the __newindex method</span>
+</span></span><span class=line><span class=cl><span class=c1>-- this method gets called with the corresponding table and the used key</span>
+</span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>meta</span> <span class=o>=</span> <span class=p>{}</span>
+</span></span><span class=line><span class=cl><span class=n>meta.__newindex</span> <span class=o>=</span> <span class=kr>function</span><span class=p>(</span><span class=n>object</span><span class=p>,</span> <span class=n>index</span><span class=p>,</span> <span class=n>value</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=n>print</span><span class=p>(</span><span class=n>string.format</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>		<span class=s2>&#34;writing the value &#39;%s&#39; to the object &#39;%s&#39; at the key `%s`&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>		<span class=n>value</span><span class=p>,</span> <span class=n>object</span><span class=p>,</span> <span class=n>index</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>  <span class=kr>return</span> <span class=o>-</span><span class=mi>1</span>
+</span></span><span class=line><span class=cl><span class=kr>end</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>-- create a testobject</span>
+</span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>t</span> <span class=o>=</span> <span class=p>{}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>-- set the metatable</span>
+</span></span><span class=line><span class=cl><span class=n>setmetatable</span><span class=p>(</span><span class=n>t</span><span class=p>,</span> <span class=n>meta</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>-- write a key (this triggers the method)</span>
+</span></span><span class=line><span class=cl><span class=c1>-- table[key] = value gets translated into meta.__newindex(table, key, value)</span>
+</span></span><span class=line><span class=cl><span class=n>t.foo</span> <span class=o>=</span> <span class=mi>42</span>
+</span></span></code></pre></div><h2 id=loops>Loops</h2><h3 id=the-numerical-for-loop>The numerical for loop</h3><p>Do not use <code>pairs()</code> or <code>ipairs()</code> in critical code! For the performance tests,
+see here: <a href=https://springrts.com/wiki/Lua_Performance#TEST_9:_for-loops>https://springrts.com/wiki/Lua_Performance#TEST_9:_for-loops</a></p><p>Try to save the table-size somewhere and use <code>for i = 1, x do end</code>.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=c1>-- i is a local control variable</span>
+</span></span><span class=line><span class=cl><span class=c1>-- the loop starts by evaluating the three control expressions:</span>
+</span></span><span class=line><span class=cl><span class=c1>-- initial value, limit, and the step</span>
+</span></span><span class=line><span class=cl><span class=c1>-- if the step is absent, it defaults to 1</span>
+</span></span><span class=line><span class=cl><span class=kr>for</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>1</span><span class=p>,</span><span class=mi>5</span> <span class=kr>do</span>
+</span></span><span class=line><span class=cl><span class=kr>end</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>-- the step value can be negative</span>
+</span></span><span class=line><span class=cl><span class=kr>for</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>20</span><span class=p>,</span><span class=o>-</span><span class=mi>20</span><span class=p>,</span><span class=o>-</span><span class=mi>1</span> <span class=kr>do</span>
+</span></span><span class=line><span class=cl><span class=kr>end</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>-- here the step value is also defined (= delta)</span>
+</span></span><span class=line><span class=cl><span class=kr>for</span> <span class=n>i</span> <span class=o>=</span> <span class=n>start</span><span class=p>,</span><span class=n>finish</span><span class=p>,</span><span class=n>delta</span> <span class=kr>do</span>
+</span></span><span class=line><span class=cl><span class=kr>end</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>-- iterable list of {key, value}</span>
+</span></span><span class=line><span class=cl><span class=kr>for</span> <span class=n>k</span><span class=p>,</span><span class=n>v</span> <span class=kr>in</span> <span class=n>pairs</span><span class=p>(</span><span class=n>tab</span><span class=p>)</span> <span class=kr>do</span>
+</span></span><span class=line><span class=cl><span class=kr>end</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>-- iterable list of {index, value}</span>
+</span></span><span class=line><span class=cl><span class=kr>for</span> <span class=n>i</span><span class=p>,</span><span class=n>v</span> <span class=kr>in</span> <span class=n>ipairs</span><span class=p>(</span><span class=n>tab</span><span class=p>)</span> <span class=kr>do</span>
+</span></span><span class=line><span class=cl><span class=kr>end</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>repeat</span>
+</span></span><span class=line><span class=cl><span class=kr>until</span> <span class=n>condition</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>while</span> <span class=n>x</span> <span class=kr>do</span>
+</span></span><span class=line><span class=cl>	<span class=kr>if</span> <span class=n>condition</span> <span class=kr>then</span> <span class=kr>break</span> <span class=kr>end</span>
+</span></span><span class=line><span class=cl><span class=kr>end</span>
+</span></span></code></pre></div><h2 id=conditionals>Conditionals</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kr>if</span> <span class=n>condition</span> <span class=kr>then</span>
+</span></span><span class=line><span class=cl>	<span class=n>print</span><span class=p>(</span><span class=s2>&#34;right&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=kr>elseif</span> <span class=n>condition</span> <span class=kr>then</span>
+</span></span><span class=line><span class=cl>	<span class=n>print</span><span class=p>(</span><span class=s2>&#34;could be&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=kr>else</span>
+</span></span><span class=line><span class=cl>	<span class=n>print</span><span class=p>(</span><span class=s2>&#34;no&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=kr>end</span>
+</span></span></code></pre></div><h2 id=mathematical-functions>Mathematical Functions</h2><h3 id=mathfloorx>math.floor(x)</h3><p>Returns the largest integral value less than or equal to x.</p><h3 id=mathrandomm--n>math.random([m [, n]])</h3><p>The function uses the <code>xoshiro256**</code> algorithm to produce pseudo-random 64-bit
+integers.</p><p>If no argument specified, then returns [0,1). If called with one positive
+argument n, then returns [1,n] If called with two arguments, then returns [m,n].</p><h3 id=mathrandomseed-x--y>math.randomseed ([x [, y]])</h3><p>When called with at least one argument, the integer parameters <code>x</code> and <code>y</code>are
+joined into a 128-bit seed. Equal seeds produce equal sequences of numbers. The
+default for <code>y</code> is zero.</p><h3 id=modulo>Modulo</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=c1>-- use of a modulo</span>
+</span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>i</span> <span class=o>=</span> <span class=n>a</span><span class=o>%</span><span class=mi>2</span> <span class=c1>-- if a=2 then i=0; if a=3 then i=1</span>
+</span></span></code></pre></div><h2 id=strings>Strings</h2><h3 id=tostringv>toString(v)</h3><p>v can be of any type and will be coverted into a string.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kd>local</span> <span class=n>number</span> <span class=o>=</span> <span class=mi>20</span>
+</span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>string</span> <span class=o>=</span> <span class=n>tostring</span><span class=p>(</span><span class=n>number</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>print</span><span class=p>(</span><span class=n>string</span><span class=p>)</span> <span class=c1>-- &#34;20&#34;</span>
+</span></span></code></pre></div><h3 id=concatenation-of-strings>Concatenation of strings</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kd>local</span> <span class=n>name</span> <span class=o>=</span> <span class=s2>&#34;pablo&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>name</span> <span class=o>=</span> <span class=n>name</span> <span class=o>..</span> <span class=s2>&#34;the number two&#34;</span> <span class=c1>-- the two dots are called the string concetenation operator</span>
+</span></span></code></pre></div><h3 id=stringformat>string.format</h3><p>Returns a formatted version of its variable number of arguments following the
+description given in its first argument. The format string follows the same
+rules as the ISO C function <code>sprintf</code>
+(<a href=http://www.cplusplus.com/reference/cstdio/printf)>http://www.cplusplus.com/reference/cstdio/printf)</a>. The only differences are
+that the conversion specifiers and modifiers *, h, L, l, and n are not
+supported and that there is an extra specifier, q.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kd>local</span> <span class=n>name</span> <span class=o>=</span> <span class=s2>&#34;Eric&#34;</span>
+</span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>age</span> <span class=o>=</span> <span class=mi>34</span>
+</span></span><span class=line><span class=cl><span class=n>string.format</span><span class=p>(</span><span class=s2>&#34;My name is %s and I am %d old.&#34;</span><span class=p>,</span> <span class=n>name</span><span class=p>,</span> <span class=n>age</span><span class=p>)</span>
+</span></span></code></pre></div><h2 id=api-tables>API: Tables</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=n>table.insert</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=mi>21</span><span class=p>)</span> <span class=c1>-- append (--&gt; t[#t+1]=21)</span>
+</span></span></code></pre></div><p>With this function you can find a value in a table and return the index</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kr>function</span> <span class=nf>tblFind</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=n>e</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=kr>for</span> <span class=n>i</span><span class=p>,</span> <span class=n>v</span> <span class=kr>in</span> <span class=n>pairs</span><span class=p>(</span><span class=n>t</span><span class=p>)</span> <span class=kr>do</span>
+</span></span><span class=line><span class=cl>		<span class=kr>if</span> <span class=n>v</span> <span class=o>==</span> <span class=n>e</span> <span class=kr>then</span>
+</span></span><span class=line><span class=cl>			<span class=kr>return</span> <span class=n>i</span>
+</span></span><span class=line><span class=cl>		<span class=kr>end</span>
+</span></span><span class=line><span class=cl>	<span class=kr>end</span>
+</span></span><span class=line><span class=cl><span class=kr>end</span>
+</span></span></code></pre></div><h2 id=classes>Classes</h2><p>This is a simple example of how to create a class in lua.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kd>local</span> <span class=n>enemies</span> <span class=o>=</span> <span class=p>{}</span>
+</span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>enemy</span> <span class=o>=</span> <span class=p>{}</span>
+</span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nc>enemy</span><span class=p>:</span><span class=nf>new</span><span class=p>(</span><span class=n>o</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=n>o</span> <span class=o>=</span> <span class=n>o</span> <span class=ow>or</span> <span class=p>{}</span>
+</span></span><span class=line><span class=cl>	<span class=n>self.__index</span> <span class=o>=</span> <span class=n>self</span>
+</span></span><span class=line><span class=cl>	<span class=n>setmetatable</span><span class=p>(</span><span class=n>o</span><span class=p>,</span> <span class=n>self</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=kr>return</span> <span class=n>o</span>
+</span></span><span class=line><span class=cl><span class=kr>end</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nc>enemy</span><span class=p>:</span><span class=nf>update</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>	<span class=c1>-- update enemy</span>
+</span></span><span class=line><span class=cl><span class=kr>end</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nc>enemy</span><span class=p>:</span><span class=nf>draw</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>	<span class=c1>-- draw enemy</span>
+</span></span><span class=line><span class=cl><span class=kr>end</span>
+</span></span></code></pre></div><p>Alternatively, you can pass predefined variables to the <code>new</code> class as follows:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kr>function</span> <span class=nc>enemy</span><span class=p>:</span><span class=nf>new</span><span class=p>(</span><span class=n>x</span><span class=p>,</span> <span class=n>y</span><span class=p>,</span> <span class=n>health</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=n>self.__index</span> <span class=o>=</span> <span class=n>self</span>
+</span></span><span class=line><span class=cl>	<span class=n>o</span> <span class=o>=</span> <span class=n>setmetatable</span><span class=p>({},</span> <span class=n>self</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=n>o.x</span> <span class=o>=</span> <span class=n>x</span>
+</span></span><span class=line><span class=cl>  <span class=n>o.y</span> <span class=o>=</span> <span class=n>y</span>
+</span></span><span class=line><span class=cl>  <span class=n>o.health</span> <span class=o>=</span> <span class=n>health</span>
+</span></span><span class=line><span class=cl>  <span class=kr>return</span> <span class=n>o</span>
+</span></span><span class=line><span class=cl><span class=kr>end</span>
+</span></span></code></pre></div><p>To create a new instance of the enemy, simple call <code>enemy:new()</code> and add it to
+your enemies array as follows:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=n>table.insert</span><span class=p>(</span><span class=n>enemies</span><span class=p>,</span> <span class=n>enemy</span><span class=p>:</span><span class=n>new</span><span class=p>(</span><span class=mi>20</span><span class=p>,</span> <span class=mi>40</span><span class=p>,</span> <span class=mi>10</span><span class=p>))</span>
+</span></span></code></pre></div><p>To update and draw the enemies simple loop over it. You can also use <code>ipairs</code>.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kr>for</span> <span class=n>k</span><span class=p>,</span><span class=n>v</span> <span class=kr>in</span> <span class=n>pairs</span><span class=p>(</span><span class=n>enemies</span><span class=p>)</span> <span class=kr>do</span>
+</span></span><span class=line><span class=cl>	<span class=n>v</span><span class=p>:</span><span class=n>update</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>  <span class=n>v</span><span class=p>:</span><span class=n>draw</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=kr>end</span>
+</span></span></code></pre></div></div></div><footer class="text-light mb-5 small text-center">&#169; 2022 digitsensitive</footer></body></html>
