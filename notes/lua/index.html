@@ -142,7 +142,7 @@ corresponding key is not present in the table.</p><div class=highlight><pre tabi
 </span></span><span class=line><span class=cl><span class=c1>-- table[key] = value gets translated into meta.__newindex(table, key, value)</span>
 </span></span><span class=line><span class=cl><span class=n>t.foo</span> <span class=o>=</span> <span class=mi>42</span>
 </span></span></code></pre></div><h2 id=loops>Loops</h2><h3 id=the-numerical-for-loop>The numerical for loop</h3><p>Do not use <code>pairs()</code> or <code>ipairs()</code> in critical code! For the performance tests,
-see here: <a href=https://springrts.com/wiki/Lua_Performance#TEST_9:_for-loops>https://springrts.com/wiki/Lua_Performance#TEST_9:_for-loops</a></p><p>Try to save the table-size somewhere and use <code>for i = 1, x do end</code>.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=c1>-- i is a local control variable</span>
+see <a href=https://springrts.com/wiki/Lua_Performance#TEST_9:_for-loops>here</a>.</p><p>Try to save the table-size somewhere and use <code>for i = 1, x do end</code>.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=c1>-- i is a local control variable</span>
 </span></span><span class=line><span class=cl><span class=c1>-- the loop starts by evaluating the three control expressions:</span>
 </span></span><span class=line><span class=cl><span class=c1>-- initial value, limit, and the step</span>
 </span></span><span class=line><span class=cl><span class=c1>-- if the step is absent, it defaults to 1</span>
