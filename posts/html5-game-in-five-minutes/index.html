@@ -13,8 +13,8 @@ get <a href=https://nodejs.org/en/>here</a>.</p><h2 id=step-2-get-the-full-sourc
 <a href=https://blog.teamtreehouse.com/introduction-to-the-mac-os-x-command-line>Mac</a>),
 <strong>navigate</strong> to the desired <strong>directory</strong> and <strong>clone</strong> the flappy bird
 repository:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=n>git</span> <span class=n>clone</span> <span class=nl>https</span><span class=p>:</span><span class=c1>//github.com/digitsensitive/phaser3-flappy-bird.git
-</span></span></span></code></pre></div><p>After cloning:</p><ul><li>run <code>npm install</code> to install the node_modules and</li><li>run <code>npm run dev</code> to start the development server and see the game.</li></ul><p>Now everything is setup and we can dive into the source code.</p><h2 id=step-3-understand-the-sourcecode>Step 3: Understand the source code</h2><p>The core of every phaser game is your Game class, that extends the Phaser.Game
-class and is given a basic configuration during creation.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></span></span></code></pre></div><p>After cloning:</p><ul><li>run <code>npm install</code> to install the node_modules and</li><li>run <code>npm run dev</code> to start the development server and see the game.</li></ul><p>Now everything is setup and we can dive into the source code.</p><h2 id=step-3-understand-the-sourcecode>Step 3: Understand the source code</h2><p>The core of every phaser game is your <strong>Game class</strong>, that extends the
+<strong>Phaser.Game class</strong> and is given a basic configuration during creation.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
@@ -24,7 +24,48 @@ class and is given a basic configuration during creation.</p><div class=highligh
 </span></span><span class=line><span class=cl>    <span class=kr>super</span><span class=p>(</span><span class=nx>config</span><span class=p>);</span>
 </span></span><span class=line><span class=cl>  <span class=p>}</span>
 </span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span></code></pre></td></tr></table></div></div><span class="p-2 my-4 mx-auto badge text-bg-dark">Game Development</span>
+</span></span></code></pre></td></tr></table></div></div><p>We can define many important game parameters in the <strong>GameConfig</strong> (f.e. game
+scenes, allowed input). For the sake of simplicity we will keep it very simple
+and clean for now.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-ts data-lang=ts><span class=line><span class=cl><span class=kr>const</span> <span class=nx>config</span>: <span class=kt>GameConfig</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nx>width</span>: <span class=kt>390</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nx>height</span>: <span class=kt>600</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nx>parent</span><span class=o>:</span> <span class=s1>&#39;game&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nx>scene</span><span class=o>:</span> <span class=p>[</span><span class=nx>GameScene</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>  <span class=nx>input</span><span class=o>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>keyboard</span>: <span class=kt>true</span>
+</span></span><span class=line><span class=cl>  <span class=p>},</span>
+</span></span><span class=line><span class=cl>  <span class=nx>physics</span><span class=o>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>default</span><span class=o>:</span> <span class=s1>&#39;arcade&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nx>arcade</span><span class=o>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nx>gravity</span><span class=o>:</span> <span class=p>{</span> <span class=nx>y</span>: <span class=kt>300</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=p>},</span>
+</span></span><span class=line><span class=cl>  <span class=nx>render</span><span class=o>:</span> <span class=p>{</span> <span class=nx>pixelArt</span>: <span class=kt>true</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>};</span>
+</span></span></code></pre></td></tr></table></div></div><p>For our Flappy Bird game we define a width (390 px) and a height (600 px). We
+will only have one scene (the Game Scene), allow the user to steer the bird with
+the keyboard and enable Arcade Physics. Of course we have to define a positive
+gravity in the y-direction, so that the bird will be pulled down from the sky if
+no flap is done. Finally we will set pixelArt to true, so that our pixel art
+will be sharp without any antialiasing.</p><p><img src=./coordinate_system_2d.png alt="Phaser 2D Coordinate System" title="Phaser 2D Coordinate System"></p><p>After having setup our game instance and the basic game configuration we proceed
+to our game scene. Usually you will have multiple scenes in your games and make
+transitions between them. We will keep it simple with one single scene.</p><p><img src=./basic_phaser_workflow.png alt="Basic Phaser Workflow" title="Basic Phaser Workflow"></p><span class="p-2 my-4 mx-auto badge text-bg-dark">Game Development</span>
 <span class="p-2 my-4 mx-auto badge text-bg-dark">HTML5</span>
 <span class="p-2 my-4 mx-auto badge text-bg-dark">Phaser</span>
 <span class="p-2 my-4 mx-auto badge text-bg-dark">Phaser 3</span>
