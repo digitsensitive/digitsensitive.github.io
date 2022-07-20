@@ -10,23 +10,6 @@
     opacity: 0;
   }
 }
-/* Customized Syntax Theming */
-div .highlight {
-  max-width: 600px;
-}
-div pre {
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-.chroma {
-  background-color: #212529;
-  border-radius: 10px;
-  padding: 10px;
-}
-code {
-  font-size: 1em;
-  word-wrap: break-word;
-}
 body .navbar a:link,
 head .navbar a:link,
 body .navbar a:visited,

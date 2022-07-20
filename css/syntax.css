@@ -1,21 +1,15 @@
 /* Background */
-.bg {
-  color: #f8f8f2;
-  background-color: #282a36;
-}
-/* PreWrapper */
 .chroma {
   color: #f8f8f2;
-  background-color: #282a36;
+  background-color: #212529;
+  border-radius: 10px;
+  padding: 10px;
 }
 /* Other */
 .chroma .x {
 }
 /* Error */
 .chroma .err {
-}
-/* CodeLine */
-.chroma .cl {
 }
 /* LineTableTD */
 .chroma .lntd {
@@ -30,30 +24,27 @@
   padding: 0;
   margin: 0;
   border: 0;
+  width: auto;
+  overflow: auto;
+  display: block;
 }
 /* LineHighlight */
 .chroma .hl {
+  display: block;
+  width: 100%;
   background-color: #ffffcc;
 }
 /* LineNumbersTable */
 .chroma .lnt {
-  white-space: pre;
-  user-select: none;
   margin-right: 0.4em;
   padding: 0 0.4em 0 0.4em;
   color: #7f7f7f;
 }
 /* LineNumbers */
 .chroma .ln {
-  white-space: pre;
-  user-select: none;
   margin-right: 0.4em;
   padding: 0 0.4em 0 0.4em;
   color: #7f7f7f;
-}
-/* Line */
-.chroma .line {
-  display: flex;
 }
 /* Keyword */
 .chroma .k {
@@ -297,7 +288,7 @@
 }
 /* GenericDeleted */
 .chroma .gd {
-  color: #ff5555;
+  color: #8b080b;
 }
 /* GenericEmph */
 .chroma .ge {
@@ -312,7 +303,6 @@
 }
 /* GenericInserted */
 .chroma .gi {
-  color: #50fa7b;
   font-weight: bold;
 }
 /* GenericOutput */
