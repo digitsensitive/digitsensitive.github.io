@@ -65,7 +65,156 @@ gravity in the y-direction, so that the bird will be pulled down from the sky if
 no flap is done. Finally we will set pixelArt to true, so that our pixel art
 will be sharp without any antialiasing.</p><p><img src=./coordinate_system_2d.png alt="Phaser 2D Coordinate System" title="Phaser 2D Coordinate System"></p><p>After having setup our game instance and the basic game configuration we proceed
 to our game scene. Usually you will have multiple scenes in your games and make
-transitions between them. We will keep it simple with one single scene.</p><p><img src=./basic_phaser_workflow.png alt="Basic Phaser Workflow" title="Basic Phaser Workflow"></p><span class="p-2 my-4 mx-auto badge text-bg-dark">Game Development</span>
+transitions between them. We will keep it simple with one single scene.</p><p><img src=./basic_phaser_workflow.png alt="Basic Phaser Workflow" title="Basic Phaser Workflow"></p><p>Each scene calls core functions according to a predefined pattern. Independent
+of Phaser the constructor() of each class will be called at first. Since our
+GameScene extends Phaser.Scene we must call super() which will execute the
+constructor of the base class. For now, we can simply take notice of this.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-ts data-lang=ts><span class=line><span class=cl><span class=kr>export</span> <span class=kr>class</span> <span class=nx>GameScene</span> <span class=kr>extends</span> <span class=nx>Phaser</span><span class=p>.</span><span class=nx>Scene</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=kr>constructor</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kr>super</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>      <span class=nx>key</span><span class=o>:</span> <span class=s1>&#39;GameScene&#39;</span>
+</span></span><span class=line><span class=cl>    <span class=p>});</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>Next, we call the <code>init()</code> function which is the right place to initiate
+variables. In our example we will only set a variable for the <code>score</code>.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-ts data-lang=ts><span class=line><span class=cl><span class=nx>init</span><span class=p>()</span><span class=o>:</span> <span class=k>void</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>this</span><span class=p>.</span><span class=nx>registry</span><span class=p>.</span><span class=kr>set</span><span class=p>(</span><span class=s2>&#34;score&#34;</span><span class=p>,</span> <span class=o>-</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>After that we call the <code>preload()</code> function, where we load all our assets. We
+will make use of the pack function and load all the assets via a JSON File.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-ts data-lang=ts><span class=line><span class=cl><span class=nx>preload</span><span class=p>()</span><span class=o>:</span> <span class=k>void</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>this</span><span class=p>.</span><span class=nx>load</span><span class=p>.</span><span class=nx>pack</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;flappyBirdPack&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;./src/assets/pack.json&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;flappyBirdPack&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>In the <code>create()</code> function we construct all our actual Game Objects:</p><ul><li>Background (TileSprite): A “wonderful” landscape</li><li>Score Text (BitmapText): The current score, at the top of the screen</li><li>Pipes (Group of Images): All the pipes of the game</li><li>Bird (Sprite): Our lovely player bird. If you are interested, you can read
+more about each Game Object Type in the Phaser 3 API Documentation.</li></ul><p>Last but not least we call the <code>update()</code> function. This function will be called
+until the scene restarts. If the bird is alive, we will move the background,
+update the bird actions and check if there is a bird-pipe overlap. If the bird
+is dead, we will stop all the pipe movements and restart the scene as soon as
+the bird is out of the screen.</p><p>The <code>addRowOfPipes()</code> function is quite interesting and worth a look.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-ts data-lang=ts><span class=line><span class=cl> <span class=kr>private</span> <span class=nx>addNewRowOfPipes</span><span class=p>()</span><span class=o>:</span> <span class=k>void</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// update the score
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>this</span><span class=p>.</span><span class=nx>registry</span><span class=p>.</span><span class=nx>values</span><span class=p>.</span><span class=nx>score</span> <span class=o>+=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>this</span><span class=p>.</span><span class=nx>scoreText</span><span class=p>.</span><span class=nx>setText</span><span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>registry</span><span class=p>.</span><span class=nx>values</span><span class=p>.</span><span class=nx>score</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// randomly pick a number between 1 and 5
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kd>let</span> <span class=nx>hole</span> <span class=o>=</span> <span class=nb>Math</span><span class=p>.</span><span class=nx>floor</span><span class=p>(</span><span class=nb>Math</span><span class=p>.</span><span class=nx>random</span><span class=p>()</span> <span class=o>*</span> <span class=mi>5</span><span class=p>)</span> <span class=o>+</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// add 6 pipes with one big hole at position hole and hole + 1
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>for</span> <span class=p>(</span><span class=kd>let</span> <span class=nx>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=nx>i</span> <span class=o>&lt;</span> <span class=mi>10</span><span class=p>;</span> <span class=nx>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=nx>i</span> <span class=o>!==</span> <span class=nx>hole</span> <span class=o>&amp;&amp;</span> <span class=nx>i</span> <span class=o>!==</span> <span class=nx>hole</span> <span class=o>+</span> <span class=mi>1</span> <span class=o>&amp;&amp;</span> <span class=nx>i</span> <span class=o>!==</span> <span class=nx>hole</span> <span class=o>+</span> <span class=mi>2</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=nx>i</span> <span class=o>===</span> <span class=nx>hole</span> <span class=o>-</span> <span class=mi>1</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>this</span><span class=p>.</span><span class=nx>addPipe</span><span class=p>(</span><span class=mi>400</span><span class=p>,</span> <span class=nx>i</span> <span class=o>*</span> <span class=mi>60</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span> <span class=k>else</span> <span class=k>if</span> <span class=p>(</span><span class=nx>i</span> <span class=o>===</span> <span class=nx>hole</span> <span class=o>+</span> <span class=mi>3</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>this</span><span class=p>.</span><span class=nx>addPipe</span><span class=p>(</span><span class=mi>400</span><span class=p>,</span> <span class=nx>i</span> <span class=o>*</span> <span class=mi>60</span><span class=p>,</span> <span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>this</span><span class=p>.</span><span class=nx>addPipe</span><span class=p>(</span><span class=mi>400</span><span class=p>,</span> <span class=nx>i</span> <span class=o>*</span> <span class=mi>60</span><span class=p>,</span> <span class=mi>2</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>Have a look at the lower illustration. We will loop through 10 boxes (each with
+a height of 60 x 60 pixels, since we scaled the 20 x 20 pixels pipe by a factor
+of 3) and create a hole with a height of 3 boxes. I decided to only accept a
+random number between 1 and 5, so that the hole will neither be at the top nor
+at the bottom. Depending where the hole is, we will use other pipe graphics (=
+since it is a spritesheet simply other frames) above and below.</p><p><img src=./scaling_pipes_with_holes.png alt="Scaling and Positioning of the Pipes with holes" title="Scaling and Positioning of the Pipes with holes"></p><p>The pipe class should be self-explanatory. Finally, I would like to discuss the
+update function of the Bird class.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-ts data-lang=ts><span class=line><span class=cl><span class=nx>update</span><span class=p>()</span><span class=o>:</span> <span class=k>void</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// handle angle change
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>if</span> <span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>angle</span> <span class=o>&lt;</span> <span class=mi>30</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>angle</span> <span class=o>+=</span> <span class=mi>2</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// handle input
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>if</span> <span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>jumpKey</span><span class=p>.</span><span class=nx>isDown</span> <span class=o>&amp;&amp;</span> <span class=o>!</span><span class=k>this</span><span class=p>.</span><span class=nx>isFlapping</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=c1>// flap
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=k>this</span><span class=p>.</span><span class=nx>isFlapping</span> <span class=o>=</span> <span class=kc>true</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>body</span><span class=p>.</span><span class=nx>setVelocityY</span><span class=p>(</span><span class=o>-</span><span class=mi>350</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>scene</span><span class=p>.</span><span class=nx>tweens</span><span class=p>.</span><span class=nx>add</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>        <span class=nx>targets</span>: <span class=kt>this</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=nx>props</span><span class=o>:</span> <span class=p>{</span> <span class=nx>angle</span><span class=o>:</span> <span class=o>-</span><span class=mi>20</span> <span class=p>},</span>
+</span></span><span class=line><span class=cl>        <span class=nx>duration</span>: <span class=kt>150</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=nx>ease</span><span class=o>:</span> <span class=s2>&#34;Power0&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=p>});</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span> <span class=k>else</span> <span class=k>if</span> <span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>jumpKey</span><span class=p>.</span><span class=nx>isUp</span> <span class=o>&amp;&amp;</span> <span class=k>this</span><span class=p>.</span><span class=nx>isFlapping</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>isFlapping</span> <span class=o>=</span> <span class=kc>false</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// check if off the screen
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>if</span> <span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>y</span> <span class=o>+</span> <span class=k>this</span><span class=p>.</span><span class=nx>height</span> <span class=o>&gt;</span> <span class=k>this</span><span class=p>.</span><span class=nx>scene</span><span class=p>.</span><span class=nx>sys</span><span class=p>.</span><span class=nx>canvas</span><span class=p>.</span><span class=nx>height</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>isDead</span> <span class=o>=</span> <span class=kc>true</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>If the bird angle is less than 30 degree we add 2 degrees each time. If you look
+at the illustration, the bird will look down more and more.</p><p><img src=./bird_angle.png alt="Bird angle (degrees): 0° is to the right, 90° is down and 180° is left" title="Bird angle (degrees): 0° is to the right, 90° is down and 180° is left"></p><p>When the the player clicks the jump button (= the bird is flapping) we will add
+some velocity upwards and use a tween to change to reset the angle again to -20
+degrees within 150 milliseconds. As soon as the player releases the jump button,
+we will set the boolean isFlapping back to false.</p><p>Congratulations! You have reached the end of this tutorial. Thank you for
+reading this. If you have any questions, feel free to contact me.</p><p>For more examples have a look at my Phaser3-Typescript Repository on Github.</p><span class="p-2 my-4 mx-auto badge text-bg-dark">Game Development</span>
 <span class="p-2 my-4 mx-auto badge text-bg-dark">HTML5</span>
 <span class="p-2 my-4 mx-auto badge text-bg-dark">Phaser</span>
 <span class="p-2 my-4 mx-auto badge text-bg-dark">Phaser 3</span>
