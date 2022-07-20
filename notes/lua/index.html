@@ -195,9 +195,9 @@ default for <code>y</code> is zero.</p><h3 id=modulo>Modulo</h3><div class=highl
 </span></span></code></pre></div><h3 id=stringformat>string.format</h3><p>Returns a formatted version of its variable number of arguments following the
 description given in its first argument. The format string follows the same
 rules as the ISO C function <code>sprintf</code>
-(<a href=http://www.cplusplus.com/reference/cstdio/printf)>http://www.cplusplus.com/reference/cstdio/printf)</a>. The only differences are
-that the conversion specifiers and modifiers *, h, L, l, and n are not
-supported and that there is an extra specifier, q.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kd>local</span> <span class=n>name</span> <span class=o>=</span> <span class=s2>&#34;Eric&#34;</span>
+<a href=http://www.cplusplus.com/reference/cstdio/printf>cpp printf</a>. The only
+differences are that the conversion specifiers and modifiers *, h, L, l, and n
+are not supported and that there is an extra specifier, q.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kd>local</span> <span class=n>name</span> <span class=o>=</span> <span class=s2>&#34;Eric&#34;</span>
 </span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>age</span> <span class=o>=</span> <span class=mi>34</span>
 </span></span><span class=line><span class=cl><span class=n>string.format</span><span class=p>(</span><span class=s2>&#34;My name is %s and I am %d old.&#34;</span><span class=p>,</span> <span class=n>name</span><span class=p>,</span> <span class=n>age</span><span class=p>)</span>
 </span></span></code></pre></div><h2 id=table-manipulation>Table Manipulation</h2><h3 id=length-1>Length</h3><p>With the unary prefix operator <code>#</code> you can get the length of a table.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kd>local</span> <span class=n>my_table</span> <span class=o>=</span> <span class=p>{</span><span class=mi>2</span><span class=p>,</span> <span class=mi>5</span><span class=p>,</span> <span class=mi>10</span><span class=p>,</span> <span class=mi>22</span><span class=p>}</span>
