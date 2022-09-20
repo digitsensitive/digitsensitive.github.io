@@ -172,11 +172,10 @@ see <a href=https://springrts.com/wiki/Lua_Performance#TEST_9:_for-loops>here</a
 </span></span><span class=line><span class=cl>  <span class=kr>if</span> <span class=n>condition</span> <span class=kr>then</span> <span class=kr>break</span> <span class=kr>end</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span></code></pre></div><p>As mentioned in the upper code example, <code>pairs()</code> returns key-value pairs, while
-<code>ipairs()</code> returns index-value pairs.
-Be aware that <code>pairs()</code> and <code>ipairs()</code> behave slightly different.
-The ordering is NOT guaranteed in <code>pairs()</code>. If you do not use any keys in your
-table, <code>pairs()</code> and <code>ipairs()</code> are identical.
-Best explained with the following example:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=n>animals</span> <span class=o>=</span> <span class=p>{}</span>
+<code>ipairs()</code> returns index-value pairs. Be aware that <code>pairs()</code> and <code>ipairs()</code>
+behave slightly different. The ordering is NOT guaranteed in <code>pairs()</code>. If you
+do not use any keys in your table, <code>pairs()</code> and <code>ipairs()</code> are identical. Best
+explained with the following example:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=n>animals</span> <span class=o>=</span> <span class=p>{}</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=n>animals</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span> <span class=o>=</span> <span class=s2>&#34;Frog&#34;</span>
 </span></span><span class=line><span class=cl><span class=n>animals</span><span class=p>[</span><span class=mi>2</span><span class=p>]</span> <span class=o>=</span> <span class=s2>&#34;Sheep&#34;</span>
