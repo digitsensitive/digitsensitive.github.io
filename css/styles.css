@@ -81,7 +81,7 @@ head .container img {
   float: none;
   margin-left: auto;
   margin-right: auto;
-  width: 75%;
+  width: 100%;
 }
 body .container h4 a:link,
 head .container h4 a:link {
