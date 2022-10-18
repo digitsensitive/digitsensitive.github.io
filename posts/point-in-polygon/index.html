@@ -1,0 +1,178 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="initial-scale=1,width=device-width"><link crossorigin=anonymous href=https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css integrity=sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor rel=stylesheet><script crossorigin=anonymous integrity=sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2 src=https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js></script>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css><link href=/favicon.ico rel=icon><link rel=stylesheet href=/css/syntax.css><link rel=stylesheet href=/css/styles.css><title>digitsensitive</title></head><body class="p-3 bg-dark"><nav class="navbar navbar-dark navbar-expand-lg"><div class=container-fluid><a class=navbar-brand href=/>Hello</a>
+<button aria-controls=navbar aria-expanded=false aria-label="Toggle navigation" class=navbar-toggler data-bs-target=#navbar data-bs-toggle=collapse type=button>
+<span class=navbar-toggler-icon></span></button><div class="collapse navbar-collapse" id=navbar><ul class="navbar-nav ml-auto"><li class=nav-item><a class=nav-link href=/about/ title>About</a></li><li class=nav-item><a class=nav-link href=/notes/ title>Notes</a></li><li class=nav-item><a class=nav-link href=/posts/ title>Posts</a></li></ul></div></div></nav><div class="container text-light py-4 mx-auto" style=max-width:600px><h1>The Point-In-Polygon Problem</h1><h6>October 18, 2022</h6><div class="row mt-4 my-4"><p>In this article we want to explore the point-in-polygon (PIP) problem. The
+problem raises the question whether a given point in the plane lies inside,
+outside or on the boundary of a polygon. This is in particular a basic operation
+in computer graphics.</p><p>The article cannot be considered as a fully comprehensive coverage of every
+aspect of the problem. Errors cannot be excluded. Corrections or additions are
+always desired and welcome.</p><p>The following sample code written in C can perform a PIP check. The output is
+only the distinction between inside or outside the polygon.</p><p><a href=https://github.com/digitsensitive/point-in-polygon-c>https://github.com/digitsensitive/point-in-polygon-c</a></p><h2 id=what-is-a-point>What is a point?</h2><p>A point is a two-dimensional primitive, which is infinitely small and has an x
+and y coordinate.</p><h2 id=what-is-a-polygon>What is a polygon?</h2><p>A polygon is a plane figure with a finite number of straight line segments
+connected to create a closed polygonal chain. The points where two segments meet
+can be called vertices (or the vertex).</p><p>Polygons may be classified depending on number of sides, convexity and
+intersection, equality and symmetry and more.</p><h2 id=how-to-solve-the-problem>How to solve the problem?</h2><p>There are different approaches how you can solve the problem. Two common
+approaches (ray casting and angle summation) have been used as early as 1974 and
+are described in the paper &ldquo;A Characterization of Ten Hidden-Surface Algorithms&rdquo;
+by Ivan Sutherland et al. The ray casting algorithm has even been presented
+earlier in 1962 by Shimrat. We will introduce the ray casting algorithm here
+shortly and then look at the Franklin&rsquo;s Point Inclusion in Polygon (PNPOLY)
+algorithm in more detail. The PNPOLY method essentially differs from the fact
+that the rays are only shot horizontally (increasing x, fixed y).</p><h3 id=ray-casting-algorithm>Ray casting algorithm</h3><p>This algorithm is also known as the crossing number algorithm or the even–odd
+rule algorithm. The observation of that even-odd rule may be mathematically
+proved using the Jordan curve theorem.</p><p>From a random point you draw a semi-infinite line (raycast) in a random
+direction and check for collisions with the line segments of the polygon. If the
+ray collides with an even number of times the point must be outside the polygon.
+If the ray collides with an odd number of times the point must be inside the
+polygon. What happens when the point lies on the edge of the polygon depends on
+the details of the ray intersection algorithm. Imagine that two polygons are
+next to each other. We select a point that is exactly on the line where both
+polygons touch each other. If we perform a PIP check for the left polygon and
+get the result &ldquo;outside&rdquo;, the PIP check for the right polygon must output the
+result &ldquo;inside&rdquo;!</p><p>You need to pay attention with this algorithm when the ray collides exactly with
+a vertex of a line segment (special case!). To get correct results you should
+not count the collision, if the line segment you are colliding with, is under
+the raycast. You will see how this works later.</p><p>Be aware that if the point lies very close to the boundary or exactly on the
+boundary of the polygon it might output a wrong result because of finite
+precision arithmetics of computers. If the point lies on the boundary, should
+you count the collision, meaning the point is outside? To fix this problem you
+might want to introduce a numerical tolerance ε and test whether the point lies
+within ε of the line. If that&rsquo;s the case the algorithm should stop and inform
+the user that the point lies too close to the polygons boundary.</p><h3 id=franklins-point-inclusion-in-polygon-pnpoly-algorithm>Franklin&rsquo;s Point Inclusion in Polygon (PNPOLY) algorithm</h3><p>Randolph Franklin makes no claim to have invented the idea of this approach.
+Since he produced and published the approach in Fortran code already in 1970 it
+may be assumed that he is the Mastermind behind the idea.</p><p>Here is the C code, published on his
+<a href=https://wrfranklin.org/Research/Short_Notes/pnpoly.html>website</a>.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>int</span> <span class=nf>pnpoly</span><span class=p>(</span><span class=kt>int</span> <span class=n>nvert</span><span class=p>,</span> <span class=kt>float</span> <span class=o>*</span><span class=n>vertx</span><span class=p>,</span> <span class=kt>float</span> <span class=o>*</span><span class=n>verty</span><span class=p>,</span> <span class=kt>float</span> <span class=n>testx</span><span class=p>,</span> <span class=kt>float</span> <span class=n>testy</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=kt>int</span> <span class=n>i</span><span class=p>,</span> <span class=n>j</span><span class=p>,</span> <span class=n>c</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>for</span> <span class=p>(</span><span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>,</span> <span class=n>j</span> <span class=o>=</span> <span class=n>nvert</span> <span class=o>-</span> <span class=mi>1</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;</span> <span class=n>nvert</span><span class=p>;</span> <span class=n>j</span> <span class=o>=</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(((</span><span class=n>verty</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>&gt;</span> <span class=n>testy</span><span class=p>)</span> <span class=o>!=</span> <span class=p>(</span><span class=n>verty</span><span class=p>[</span><span class=n>j</span><span class=p>]</span> <span class=o>&gt;</span> <span class=n>testy</span><span class=p>))</span> <span class=o>&amp;&amp;</span>
+</span></span><span class=line><span class=cl>        <span class=p>(</span><span class=n>testx</span> <span class=o>&lt;</span>
+</span></span><span class=line><span class=cl>         <span class=p>(</span><span class=n>vertx</span><span class=p>[</span><span class=n>j</span><span class=p>]</span> <span class=o>-</span> <span class=n>vertx</span><span class=p>[</span><span class=n>i</span><span class=p>])</span> <span class=o>*</span> <span class=p>(</span><span class=n>testy</span> <span class=o>-</span> <span class=n>verty</span><span class=p>[</span><span class=n>i</span><span class=p>])</span> <span class=o>/</span> <span class=p>(</span><span class=n>verty</span><span class=p>[</span><span class=n>j</span><span class=p>]</span> <span class=o>-</span> <span class=n>verty</span><span class=p>[</span><span class=n>i</span><span class=p>])</span> <span class=o>+</span>
+</span></span><span class=line><span class=cl>             <span class=n>vertx</span><span class=p>[</span><span class=n>i</span><span class=p>]))</span>
+</span></span><span class=line><span class=cl>      <span class=n>c</span> <span class=o>=</span> <span class=o>!</span><span class=n>c</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=n>c</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>Let&rsquo;s dive in and separate each part of the upper code to understand what is
+going on. The function takes the number of vertices, two pointers to an array of
+float values and the x and y position of the point to be tested.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>int</span> <span class=n>c</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>...</span>
+</span></span><span class=line><span class=cl><span class=n>c</span> <span class=o>=</span> <span class=o>!</span><span class=n>c</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>...</span>
+</span></span><span class=line><span class=cl><span class=k>return</span> <span class=n>c</span><span class=p>;</span>
+</span></span></code></pre></div><p>The variable <code>c</code> is initialized to the value of zero (basic signed integer
+type). This variable represents the status of how often the edges of the polygon
+were crossed. At the beginning it is an even number (= zero, 0), which means the
+point has not crossed any edges yet. If the semi-infinite ray does not collide
+the polygon at all, the point must be outside. Or if it collides the polygon
+twice, it must be outside too. You get the point. The collisions with the edges
+are checked in the if statement (see more later). Each time the if statement is
+<code>true</code> the variable <code>c</code> switches its state between 0 and 1.</p><p>To be more specific and clear I would recommend to rename the variable <code>c</code> to
+<code>is_number_crossed_edges_odd</code>. So if the variable <code>is_number_crossed_edges_odd</code>
+is 1 or true the number of crossed edges is odd. If it is 0 or false the number
+of crossed edges is even. It is always worth to be clear with the variable
+naming!</p><p>Next we want to unterstand what the for loop does.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=k>for</span> <span class=p>(</span><span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>,</span> <span class=n>j</span> <span class=o>=</span> <span class=n>nvert</span> <span class=o>-</span> <span class=mi>1</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;</span> <span class=n>nvert</span><span class=p>;</span> <span class=n>j</span> <span class=o>=</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{}</span>
+</span></span></code></pre></div><p>On the first cycle of the for loop the values <code>i</code> and <code>j</code> are initialized to <code>0</code>
+respectively <code>nvert-1</code> (f.e. six for a polygon with seven vertices). As long as
+the condition <code>i &lt; nvert</code> is true (seven cycles for a polygon with seven
+vertices) the <code>i</code> and <code>j</code> values are augmented by one. Be aware that <code>j</code> is
+always set first to <code>i</code> and only then the <code>i</code> value will be increased by one.
+<code>j = ++i</code> would increase <code>i</code> first and then set j to i!</p><p>The values for each cycle for a polygon with seven vertices would be:</p><ul><li>Cycle 1: i = 0; j = 6</li><li>Cycle 2: i = 1; j = 0</li><li>Cycle 3: i = 2; j = 1</li><li>Cycle 4: i = 3; j = 2</li><li>Cycle 5: i = 4; j = 3</li><li>Cycle 6: i = 5; j = 4</li><li>Cycle 7: i = 6; j = 5</li></ul><p>So now we know the values for <code>i</code> and <code>j</code> for each cycle. In addition, we know
+that the number of cycles is always equal to the number of vertices/edges. But
+the most important conclusion to take here is: We loop through each line segment
+of the polygon, starting with the last line segment. Be aware that the order of
+the vertices in the arrays (clockwise or counterclockwise) does not matter.</p><p>Finally, we would like to understand the if statement. For this we will break up
+the two conditions, which are connected with an <code>&&</code>. The if statement will only
+be true if both conditions below are true.</p><p>In the C language, if the first statement is false, then the second statement
+will not be evaluated. In other languages you might need to be careful, because
+you might get a divide-by-zero constellation.</p><p>First condition:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=p>(</span><span class=n>verty</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>&gt;</span> <span class=n>testy</span><span class=p>)</span> <span class=o>!=</span> <span class=p>(</span><span class=n>verty</span><span class=p>[</span><span class=n>j</span><span class=p>]</span> <span class=o>&gt;</span> <span class=n>testy</span><span class=p>)</span>
+</span></span></code></pre></div><p>In the first condition we are only interested in the vertical position (y
+position) of the test point in relation to the current line segment being
+evaluated. The two conditions in brackets are connected with an <code>!=</code>, so it will
+only return true if they are not equal. This is the case if the y position of
+the test point is between the two points of the line segment or exactly on the
+same height as the lower point of the line segment (see later). Let&rsquo;s have a
+detailed look at it and test what happens for some possible constellations. We
+will always look at the last line segment of the polygon (segment g) that
+connects the point G with the point A.</p><p><img src=./polygon1.png alt="Polygon 1" title="Polygon 1"></p><p>Let&rsquo;s check for the test points H, I and J and fill the numbers:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=c1>// Test Point H:
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>(</span><span class=mi>1</span> <span class=o>&gt;</span> <span class=mi>2</span><span class=p>)</span> <span class=o>!=</span> <span class=p>(</span><span class=mi>3</span> <span class=o>&gt;</span> <span class=mi>2</span><span class=p>)</span> <span class=o>=&gt;</span> <span class=nb>false</span> <span class=o>!=</span> <span class=nb>true</span> <span class=o>=&gt;</span> <span class=nb>true</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// Test Point I:
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>(</span><span class=mi>1</span> <span class=o>&gt;</span> <span class=mi>3</span><span class=p>)</span> <span class=o>!=</span> <span class=p>(</span><span class=mi>3</span> <span class=o>&gt;</span> <span class=mi>3</span><span class=p>)</span> <span class=o>=&gt;</span> <span class=nb>false</span> <span class=o>!=</span> <span class=nb>false</span> <span class=o>=&gt;</span> <span class=nb>false</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// Test Point J:
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>(</span><span class=mi>1</span> <span class=o>&gt;</span> <span class=mi>1</span><span class=p>)</span> <span class=o>!=</span> <span class=p>(</span><span class=mi>3</span> <span class=o>&gt;</span> <span class=mi>1</span><span class=p>)</span> <span class=o>=&gt;</span> <span class=nb>false</span> <span class=o>!=</span> <span class=nb>true</span> <span class=o>=&gt;</span> <span class=nb>true</span>
+</span></span></code></pre></div><p>Here we see, that if the y position of the test point is between the two points
+of the line segment, it will return true. We also note, that if the y position
+of the test point is the same as the y position of the upper point of the line
+segment it will return false (Point I in our example). That is not the case for
+the lower point, here it will return true.</p><p>This algorithm has the following rules:</p><ul><li>If the ray collides with a vertex and the line segment being evaluated is
+below the ray it does not count as a collision</li><li>If the ray collides with a vertex and the line segment being evaluated is
+above the ray it does count as a collision</li><li>So the vertices at the top of a polygon count as zero and the vertices at the
+bottom of the polygon count as two (in both cases even amount => outside).</li></ul><p>It is crucial, that the collisions with vertices are evaluated that way. The
+algorithm would return false values, if it would count the collision with the
+upper vertex. It is worth to look at one more example.</p><p><img src=./polygon3.png alt="Polygon 3" title="Polygon 3"></p><p>If the algorithm would count the collision with the upper vertex you would get
+three (lower vertex of line segment c, upper vertex of line segment d and line
+segment b) collisions with the semi-infinite line (raycast) g. That is not
+correct because the test point E is clearly outside of the polygon!</p><p><a href=https://stackoverflow.com/questions/14130742/ray-through-vertex-special-case-when-detecting-point-in-polygon>Here</a>
+you will find a lot of further informations regarding this topic. The following
+illustration from
+<a href=https://web.archive.org/web/20180524215455/http://jedi.ks.uiuc.edu/~johns/raytracer/rtn/rtnv3n4.html#art22>Mark VandeWettering</a>
+was helpful to understand the problem better.</p><p><img src=./vertices_collisions.png alt="Schematic illustration from Mark VandeWettering" title="Schematic illustration from Mark VandeWettering on how to count collisions with vertices"></p><p>Let&rsquo;s have a look at a different constellation.</p><p><img src=./polygon2.png alt="Polygon 2" title="Polygon 2"></p><p>Let&rsquo;s check for the test point H and fill the numbers:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=c1>// Test Point H:
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>(</span><span class=mf>2.5</span> <span class=o>&gt;</span> <span class=mf>2.5</span><span class=p>)</span> <span class=o>!=</span> <span class=p>(</span><span class=mf>2.5</span> <span class=o>&gt;</span> <span class=mf>2.5</span><span class=p>)</span> <span class=o>=&gt;</span> <span class=nb>false</span> <span class=o>!=</span> <span class=nb>false</span> <span class=o>=&gt;</span> <span class=nb>false</span>
+</span></span></code></pre></div><p>This is a special case and we observe that it does not count as a collision.</p><p>Condition 2:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=p>(</span><span class=n>testx</span> <span class=o>&lt;</span> <span class=p>(</span><span class=n>vertx</span><span class=p>[</span><span class=n>j</span><span class=p>]</span> <span class=o>-</span> <span class=n>vertx</span><span class=p>[</span><span class=n>i</span><span class=p>])</span> <span class=o>*</span> <span class=p>(</span><span class=n>testy</span> <span class=o>-</span> <span class=n>verty</span><span class=p>[</span><span class=n>i</span><span class=p>])</span> <span class=o>/</span> <span class=p>(</span><span class=n>verty</span><span class=p>[</span><span class=n>j</span><span class=p>]</span> <span class=o>-</span> <span class=n>verty</span><span class=p>[</span><span class=n>i</span><span class=p>])</span> <span class=o>+</span> <span class=n>vertx</span><span class=p>[</span><span class=n>i</span><span class=p>])</span>
+</span></span></code></pre></div><p>This condition checks if the x position of the test point is on the left side of
+the line segment. It is important to mention, that if the test point is exactly
+on the line segment that no collision is counted. This explains, as we have
+already mentioned above in the part &ldquo;Ray casting algorithm&rdquo;, why you get
+different results (inside or outside) depending on which line segment the test
+point lies. If the test point lies on a line segment on the left side of the
+polygon it will output &ldquo;outside&rdquo;. If the test point lies on a line segment on
+the right side of the polygon it will output &ldquo;inside&rdquo;.</p><h2 id=optimizations>Optimizations</h2><h3 id=axis-aligned-bounding-box-aabb>Axis-aligned bounding box (AABB)</h3><p>If you want to speed up your algorithm, you can create an axis-aligned bounding
+box (AABB) around the polygon first and check, if the point lies outside of this
+rectangle. If that is the case, no further tests need to be performed. Great!</p><p>Find below the quick test written in C. The function implementations can be
+found in the sample code.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=c1>// Find the smallest and largest x and y values
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kt>float</span> <span class=n>x_min</span> <span class=o>=</span> <span class=n>find_smallest_element</span><span class=p>(</span><span class=n>vertx</span><span class=p>,</span> <span class=n>length_vertx</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=kt>float</span> <span class=n>x_max</span> <span class=o>=</span> <span class=n>find_largest_element</span><span class=p>(</span><span class=n>vertx</span><span class=p>,</span> <span class=n>length_vertx</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=kt>float</span> <span class=n>y_min</span> <span class=o>=</span> <span class=n>find_smallest_element</span><span class=p>(</span><span class=n>verty</span><span class=p>,</span> <span class=n>length_verty</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=kt>float</span> <span class=n>y_max</span> <span class=o>=</span> <span class=n>find_largest_element</span><span class=p>(</span><span class=n>verty</span><span class=p>,</span> <span class=n>length_verty</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=p>(</span><span class=n>x</span> <span class=o>&lt;</span> <span class=n>x_min</span> <span class=o>||</span> <span class=n>x</span> <span class=o>&gt;</span> <span class=n>x_max</span> <span class=o>||</span> <span class=n>y</span> <span class=o>&lt;</span> <span class=n>y_min</span> <span class=o>||</span> <span class=n>y</span> <span class=o>&gt;</span> <span class=n>y_max</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// The point is outside of the polygon!
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=bins-method>Bins method</h3><p>In this method the bounding box surrounding the polygon is split into multiple
+bins. When a test point is evaluated the corresponding bin is retrieved and
+collisions are evaluated. For more details have a look at the great
+<a href=http://erich.realtimerendering.com/ptinpoly>article &ldquo;Point in Polygon Strategies&rdquo; from Eric Haines</a>.</p><p>This optimization is not included in the upper source code.</p><h3 id=grid-method>Grid method</h3><p>For even faster results you can use a lookup grids. Lay out a grid inside the
+bounding box and decide for each cell if it is fully inside, fully outside or
+indeterminate. For more details have a look at the great
+<a href=http://erich.realtimerendering.com/ptinpoly>article &ldquo;Point in Polygon Strategies&rdquo; from Eric Haines</a>.</p><p>This optimization is not included in the upper source code.</p><h3 id=use-of-unique-algorithms-depending-on-the-polygon-type>Use of unique algorithms depending on the polygon type</h3><p>You might want to use different algorithms depending the type of the polygon
+(f.e. convex vs non-convex).</p><h2 id=references>References</h2><ul><li><a href=https://dl.acm.org/doi/10.1145/368637.368653>Algorithm 112, Position of Point Relative to Polygon (Shimrat 1962) Shimrat, M., CACM, p. 434, August 1962</a></li><li><a href=https://dl.acm.org/doi/pdf/10.1145/356625.356626>A Characterization of Ten Hidden-Surface Algorithms</a></li><li><a href=https://www.math10.com/en/geometry/geogebra/geogebra.html>GeoGebra - Free Online Geometry Tool</a></li><li><a href=https://www.matematica.pt/en/faq/convex-polygon.php>Matematica</a></li><li><a href=https://wrfranklin.org/Research/Short_Notes/pnpoly.html>PNPOLY - Point Inclusion in Polygon Test</a></li><li><a href=http://alienryderflex.com/polygon>Point-In-Polygon Algorithm — Determining Whether A Point Is Inside A Complex Polygon</a></li><li><a href=http://erich.realtimerendering.com/ptinpoly>Point-in-Polygon Strategies</a></li><li><a href=https://en.wikipedia.org/wiki/Point_in_polygon>Point-in-Polygon Wikipedia</a></li><li><a href=https://en.wikipedia.org/wiki/Polygon>Polygon Wikipedia</a></li><li><a href=https://stackoverflow.com/questions/14130742/ray-through-vertex-special-case-when-detecting-point-in-polygon>Stackoverflow: &ldquo;ray through vertex&rdquo; special case when detecting point in polygon</a></li><li><a href=https://stackoverflow.com/questions/217578/how-can-i-determine-whether-a-2d-point-is-within-a-polygon>Stackoverflow: How can I determine whether a 2D Point is within a Polygon?</a></li><li><a href=https://web.archive.org/web/20180524215455/http://jedi.ks.uiuc.edu/~johns/raytracer/rtn/rtnv3n4.html#art22>Wayback Machine, Ray Tracing News, vol. 3 no. 4, October 1, 1990</a></li></ul></div><span class="p-2 my-1 mx-auto badge text-bg-dark">Computational geometry</span>
+<span class="p-2 my-1 mx-auto badge text-bg-dark">Computer graphics</span>
+<span class="p-2 my-1 mx-auto badge text-bg-dark">Jordan curve theorem</span>
+<span class="p-2 my-1 mx-auto badge text-bg-dark">PIP</span>
+<span class="p-2 my-1 mx-auto badge text-bg-dark">PNPOLY</span>
+<span class="p-2 my-1 mx-auto badge text-bg-dark">Point</span>
+<span class="p-2 my-1 mx-auto badge text-bg-dark">Polygon</span>
+<span class="p-2 my-1 mx-auto badge text-bg-dark">Problem</span>
+<span class="p-2 my-1 mx-auto badge text-bg-dark">Programming</span>
+<span class="p-2 my-1 mx-auto badge text-bg-dark">Ray casting</span></div><footer class="text-light mb-5 small text-center">&#169; 2022 digitsensitive</footer></body></html>
