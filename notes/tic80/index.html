@@ -10,12 +10,12 @@
 </span></span><span class=line><span class=cl> <span class=c1>-- here lies our game loop</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span></code></pre></div><h2 id=game-loop>Game loop</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kr>function</span> <span class=nf>TIC</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=n>global.time</span><span class=o>=</span><span class=n>global.time</span><span class=o>+</span><span class=mi>1</span>
-</span></span><span class=line><span class=cl>	<span class=n>input</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=kr>if</span> <span class=n>global.time</span><span class=o>%</span><span class=n>global.updateSpeed</span><span class=o>==</span><span class=mi>0</span> <span class=kr>then</span>
-</span></span><span class=line><span class=cl>		<span class=n>update</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=kr>end</span>
-</span></span><span class=line><span class=cl>	<span class=n>draw</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>global.time</span><span class=o>=</span><span class=n>global.time</span><span class=o>+</span><span class=mi>1</span>
+</span></span><span class=line><span class=cl>    <span class=n>input</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=kr>if</span> <span class=n>global.time</span><span class=o>%</span><span class=n>global.updateSpeed</span><span class=o>==</span><span class=mi>0</span> <span class=kr>then</span>
+</span></span><span class=line><span class=cl>        <span class=n>update</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=kr>end</span>
+</span></span><span class=line><span class=cl>    <span class=n>draw</span><span class=p>()</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span></code></pre></div><h2 id=general-helper-functions>General helper functions</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kr>function</span> <span class=nf>cos</span><span class=p>(</span><span class=n>x</span><span class=p>)</span> <span class=kr>return</span> <span class=n>math.cos</span><span class=p>(</span><span class=n>x</span><span class=p>)</span> <span class=kr>end</span>
 </span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nf>sin</span><span class=p>(</span><span class=n>x</span><span class=p>)</span> <span class=kr>return</span> <span class=n>math.sin</span><span class=p>(</span><span class=n>x</span><span class=p>)</span> <span class=kr>end</span>
@@ -40,16 +40,16 @@
 </span></span><span class=line><span class=cl><span class=n>max</span> <span class=o>=</span> <span class=n>math.max</span>
 </span></span><span class=line><span class=cl><span class=n>abs</span> <span class=o>=</span> <span class=n>math.abs</span>
 </span></span></code></pre></div><h2 id=specific-helper-functions>Specific helper functions</h2><h3 id=physics>Physics</h3><h4 id=add-velocity-to-object>Add velocity to object</h4><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kr>function</span> <span class=nf>addVelocityToObject</span><span class=p>(</span><span class=n>o</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>o.x</span> <span class=o>=</span> <span class=n>o.x</span> <span class=o>+</span> <span class=n>o.vx</span>
-</span></span><span class=line><span class=cl>	<span class=n>o.y</span> <span class=o>=</span> <span class=n>o.y</span> <span class=o>+</span> <span class=n>o.vy</span>
+</span></span><span class=line><span class=cl>    <span class=n>o.x</span> <span class=o>=</span> <span class=n>o.x</span> <span class=o>+</span> <span class=n>o.vx</span>
+</span></span><span class=line><span class=cl>    <span class=n>o.y</span> <span class=o>=</span> <span class=n>o.y</span> <span class=o>+</span> <span class=n>o.vy</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span></code></pre></div><h4 id=apply-friction-to-object>Apply friction to object</h4><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kr>function</span> <span class=nf>applyFrictionToObject</span><span class=p>(</span><span class=n>o</span><span class=p>,</span><span class=n>fx</span><span class=p>,</span><span class=n>fy</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>o.vx</span> <span class=o>=</span> <span class=n>o.vx</span> <span class=o>*</span> <span class=n>fx</span>
-</span></span><span class=line><span class=cl>	<span class=n>o.vy</span> <span class=o>=</span> <span class=n>o.vy</span> <span class=o>*</span> <span class=n>fy</span>
+</span></span><span class=line><span class=cl>    <span class=n>o.vx</span> <span class=o>=</span> <span class=n>o.vx</span> <span class=o>*</span> <span class=n>fx</span>
+</span></span><span class=line><span class=cl>    <span class=n>o.vy</span> <span class=o>=</span> <span class=n>o.vy</span> <span class=o>*</span> <span class=n>fy</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span></code></pre></div><h4 id=apply-gravity-to-object>Apply gravity to object</h4><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kr>function</span> <span class=nf>applyGravityToObject</span><span class=p>(</span><span class=n>o</span><span class=p>,</span> <span class=n>g</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>o.vy</span> <span class=o>=</span> <span class=n>o.vy</span> <span class=o>+</span> <span class=n>g</span>
-</span></span><span class=line><span class=cl>	<span class=n>o.vy</span> <span class=o>=</span> <span class=n>min</span><span class=p>(</span><span class=n>max</span><span class=p>(</span><span class=n>o.vy</span><span class=p>,</span> <span class=o>-</span><span class=mi>3</span><span class=p>),</span> <span class=mi>3</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>o.vy</span> <span class=o>=</span> <span class=n>o.vy</span> <span class=o>+</span> <span class=n>g</span>
+</span></span><span class=line><span class=cl>    <span class=n>o.vy</span> <span class=o>=</span> <span class=n>min</span><span class=p>(</span><span class=n>max</span><span class=p>(</span><span class=n>o.vy</span><span class=p>,</span> <span class=o>-</span><span class=mi>3</span><span class=p>),</span> <span class=mi>3</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span></code></pre></div><h3 id=sprite-animations>Sprite Animations</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=c1>-- time returns the number of milliseconds elapsed since the application began</span>
 </span></span><span class=line><span class=cl><span class=c1>-- // will auto round the result</span>
@@ -57,65 +57,65 @@
 </span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>animSpeed</span> <span class=o>=</span> <span class=mi>128</span>
 </span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>spriteID</span> <span class=o>=</span> <span class=p>(</span><span class=n>time</span><span class=p>()</span><span class=o>//</span><span class=n>animSpeed</span><span class=p>)</span><span class=o>%</span><span class=mi>2</span>
 </span></span></code></pre></div><h3 id=print-text>Print text</h3><h4 id=with-a-border>With a border</h4><p>c1 defines the inner color. c2 defines the border color.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kr>function</span> <span class=nf>printf</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=n>x</span><span class=p>,</span><span class=n>y</span><span class=p>,</span><span class=n>c1</span><span class=p>,</span><span class=n>c2</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=kd>local</span> <span class=n>x</span><span class=o>=</span><span class=n>x</span> <span class=ow>or</span> <span class=mi>0</span>
-</span></span><span class=line><span class=cl>	<span class=kd>local</span> <span class=n>y</span><span class=o>=</span><span class=n>y</span> <span class=ow>or</span> <span class=mi>0</span>
-</span></span><span class=line><span class=cl>	<span class=kd>local</span> <span class=n>c1</span><span class=o>=</span><span class=n>c1</span> <span class=ow>or</span> <span class=mi>12</span>
-</span></span><span class=line><span class=cl>	<span class=kd>local</span> <span class=n>c2</span><span class=o>=</span><span class=n>c2</span> <span class=ow>or</span> <span class=mi>0</span>
+</span></span><span class=line><span class=cl>    <span class=kd>local</span> <span class=n>x</span><span class=o>=</span><span class=n>x</span> <span class=ow>or</span> <span class=mi>0</span>
+</span></span><span class=line><span class=cl>    <span class=kd>local</span> <span class=n>y</span><span class=o>=</span><span class=n>y</span> <span class=ow>or</span> <span class=mi>0</span>
+</span></span><span class=line><span class=cl>    <span class=kd>local</span> <span class=n>c1</span><span class=o>=</span><span class=n>c1</span> <span class=ow>or</span> <span class=mi>12</span>
+</span></span><span class=line><span class=cl>    <span class=kd>local</span> <span class=n>c2</span><span class=o>=</span><span class=n>c2</span> <span class=ow>or</span> <span class=mi>0</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	<span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=n>x</span><span class=o>-</span><span class=mi>1</span><span class=p>,</span><span class=n>y</span><span class=p>,</span><span class=n>c2</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=n>x</span><span class=p>,</span><span class=n>y</span><span class=o>-</span><span class=mi>1</span><span class=p>,</span><span class=n>c2</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=n>x</span><span class=o>+</span><span class=mi>1</span><span class=p>,</span><span class=n>y</span><span class=p>,</span><span class=n>c2</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=n>x</span><span class=p>,</span><span class=n>y</span><span class=o>+</span><span class=mi>1</span><span class=p>,</span><span class=n>c2</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=n>x</span><span class=p>,</span><span class=n>y</span><span class=p>,</span><span class=n>c1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=n>x</span><span class=o>-</span><span class=mi>1</span><span class=p>,</span><span class=n>y</span><span class=p>,</span><span class=n>c2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=n>x</span><span class=p>,</span><span class=n>y</span><span class=o>-</span><span class=mi>1</span><span class=p>,</span><span class=n>c2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=n>x</span><span class=o>+</span><span class=mi>1</span><span class=p>,</span><span class=n>y</span><span class=p>,</span><span class=n>c2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=n>x</span><span class=p>,</span><span class=n>y</span><span class=o>+</span><span class=mi>1</span><span class=p>,</span><span class=n>c2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=n>x</span><span class=p>,</span><span class=n>y</span><span class=p>,</span><span class=n>c1</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span></code></pre></div><p>#### With a shadow at the top</p><p>c1 defines the shadow color at the top. c2 defines the color of the text.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kr>function</span> <span class=nf>printf</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=n>x</span><span class=p>,</span><span class=n>y</span><span class=p>,</span><span class=n>c1</span><span class=p>,</span><span class=n>c2</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=kd>local</span> <span class=n>x</span><span class=o>=</span><span class=n>x</span> <span class=ow>or</span> <span class=mi>0</span>
-</span></span><span class=line><span class=cl>	<span class=kd>local</span> <span class=n>y</span><span class=o>=</span><span class=n>y</span> <span class=ow>or</span> <span class=mi>0</span>
-</span></span><span class=line><span class=cl>	<span class=kd>local</span> <span class=n>c1</span><span class=o>=</span><span class=n>c1</span> <span class=ow>or</span> <span class=mi>12</span>
-</span></span><span class=line><span class=cl>	<span class=kd>local</span> <span class=n>c2</span><span class=o>=</span><span class=n>c2</span> <span class=ow>or</span> <span class=mi>0</span>
+</span></span><span class=line><span class=cl>    <span class=kd>local</span> <span class=n>x</span><span class=o>=</span><span class=n>x</span> <span class=ow>or</span> <span class=mi>0</span>
+</span></span><span class=line><span class=cl>    <span class=kd>local</span> <span class=n>y</span><span class=o>=</span><span class=n>y</span> <span class=ow>or</span> <span class=mi>0</span>
+</span></span><span class=line><span class=cl>    <span class=kd>local</span> <span class=n>c1</span><span class=o>=</span><span class=n>c1</span> <span class=ow>or</span> <span class=mi>12</span>
+</span></span><span class=line><span class=cl>    <span class=kd>local</span> <span class=n>c2</span><span class=o>=</span><span class=n>c2</span> <span class=ow>or</span> <span class=mi>0</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	<span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=n>x</span><span class=p>,</span><span class=n>y</span><span class=p>,</span><span class=n>c1</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=n>x</span><span class=p>,</span><span class=n>y</span><span class=o>+</span><span class=mi>1</span><span class=p>,</span><span class=n>c2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=n>x</span><span class=p>,</span><span class=n>y</span><span class=p>,</span><span class=n>c1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=n>x</span><span class=p>,</span><span class=n>y</span><span class=o>+</span><span class=mi>1</span><span class=p>,</span><span class=n>c2</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span></code></pre></div><h4 id=horizontally-centered>Horizontally centered</h4><p>f defines the flag indicating whether fixed width printing is required. s
 defines the scale.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kr>function</span> <span class=nf>printhc</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=n>y</span><span class=p>,</span><span class=n>c</span><span class=p>,</span><span class=n>f</span><span class=p>,</span><span class=n>s</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=kd>local</span> <span class=n>f</span><span class=o>=</span><span class=n>f</span> <span class=ow>or</span> <span class=kc>false</span>
-</span></span><span class=line><span class=cl>	<span class=kd>local</span> <span class=n>s</span><span class=o>=</span><span class=n>s</span> <span class=ow>or</span> <span class=mi>1</span>
-</span></span><span class=line><span class=cl>	<span class=kd>local</span> <span class=n>w</span><span class=o>=</span><span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=o>-</span><span class=mi>8</span><span class=p>,</span><span class=o>-</span><span class=mi>8</span><span class=p>)</span><span class=o>*</span><span class=n>s</span>
-</span></span><span class=line><span class=cl>	<span class=kd>local</span> <span class=n>x</span><span class=o>=</span><span class=p>(</span><span class=mi>240</span><span class=o>-</span><span class=n>w</span><span class=p>)</span><span class=o>/</span><span class=mi>2</span>
-</span></span><span class=line><span class=cl>	<span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=n>x</span><span class=p>,</span><span class=n>y</span><span class=p>,</span><span class=n>c</span><span class=p>,</span><span class=n>f</span><span class=p>,</span><span class=n>s</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=kd>local</span> <span class=n>f</span><span class=o>=</span><span class=n>f</span> <span class=ow>or</span> <span class=kc>false</span>
+</span></span><span class=line><span class=cl>    <span class=kd>local</span> <span class=n>s</span><span class=o>=</span><span class=n>s</span> <span class=ow>or</span> <span class=mi>1</span>
+</span></span><span class=line><span class=cl>    <span class=kd>local</span> <span class=n>w</span><span class=o>=</span><span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=o>-</span><span class=mi>8</span><span class=p>,</span><span class=o>-</span><span class=mi>8</span><span class=p>)</span><span class=o>*</span><span class=n>s</span>
+</span></span><span class=line><span class=cl>    <span class=kd>local</span> <span class=n>x</span><span class=o>=</span><span class=p>(</span><span class=mi>240</span><span class=o>-</span><span class=n>w</span><span class=p>)</span><span class=o>/</span><span class=mi>2</span>
+</span></span><span class=line><span class=cl>    <span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=n>x</span><span class=p>,</span><span class=n>y</span><span class=p>,</span><span class=n>c</span><span class=p>,</span><span class=n>f</span><span class=p>,</span><span class=n>s</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span></code></pre></div><p>#### Vertically centered</p><p>f defines the flag indicating whether fixed width printing is required. s
 defines the scale.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kr>function</span> <span class=nf>printvc</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=n>x</span><span class=p>,</span><span class=n>c</span><span class=p>,</span><span class=n>f</span><span class=p>,</span><span class=n>s</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=kd>local</span> <span class=n>f</span><span class=o>=</span><span class=n>f</span> <span class=ow>or</span> <span class=kc>false</span>
-</span></span><span class=line><span class=cl>	<span class=kd>local</span> <span class=n>s</span><span class=o>=</span><span class=n>s</span> <span class=ow>or</span> <span class=mi>1</span>
-</span></span><span class=line><span class=cl>	<span class=kd>local</span> <span class=n>w</span><span class=o>=</span><span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=o>-</span><span class=mi>8</span><span class=p>,</span><span class=o>-</span><span class=mi>8</span><span class=p>)</span><span class=o>*</span><span class=n>s</span>
-</span></span><span class=line><span class=cl>	<span class=kd>local</span> <span class=n>y</span><span class=o>=</span><span class=p>(</span><span class=mi>136</span><span class=o>-</span><span class=mi>6</span><span class=p>)</span><span class=o>/</span><span class=mi>2</span>
-</span></span><span class=line><span class=cl>	<span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=n>x</span><span class=p>,</span><span class=n>y</span><span class=p>,</span><span class=n>c</span><span class=p>,</span><span class=n>f</span><span class=p>,</span><span class=n>s</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=kd>local</span> <span class=n>f</span><span class=o>=</span><span class=n>f</span> <span class=ow>or</span> <span class=kc>false</span>
+</span></span><span class=line><span class=cl>    <span class=kd>local</span> <span class=n>s</span><span class=o>=</span><span class=n>s</span> <span class=ow>or</span> <span class=mi>1</span>
+</span></span><span class=line><span class=cl>    <span class=kd>local</span> <span class=n>w</span><span class=o>=</span><span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=o>-</span><span class=mi>8</span><span class=p>,</span><span class=o>-</span><span class=mi>8</span><span class=p>)</span><span class=o>*</span><span class=n>s</span>
+</span></span><span class=line><span class=cl>    <span class=kd>local</span> <span class=n>y</span><span class=o>=</span><span class=p>(</span><span class=mi>136</span><span class=o>-</span><span class=mi>6</span><span class=p>)</span><span class=o>/</span><span class=mi>2</span>
+</span></span><span class=line><span class=cl>    <span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=n>x</span><span class=p>,</span><span class=n>y</span><span class=p>,</span><span class=n>c</span><span class=p>,</span><span class=n>f</span><span class=p>,</span><span class=n>s</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span></code></pre></div><h4 id=centered>Centered</h4><p>f defines the flag indicating whether fixed width printing is required. s
 defines the scale.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kr>function</span> <span class=nf>printc</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=n>c</span><span class=p>,</span><span class=n>f</span><span class=p>,</span><span class=n>s</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=kd>local</span> <span class=n>f</span><span class=o>=</span><span class=n>f</span> <span class=ow>or</span> <span class=kc>false</span>
-</span></span><span class=line><span class=cl>	<span class=kd>local</span> <span class=n>s</span><span class=o>=</span><span class=n>s</span> <span class=ow>or</span> <span class=mi>1</span>
-</span></span><span class=line><span class=cl>	<span class=kd>local</span> <span class=n>w</span><span class=o>=</span><span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=o>-</span><span class=mi>8</span><span class=p>,</span><span class=o>-</span><span class=mi>8</span><span class=p>)</span><span class=o>*</span><span class=n>s</span>
-</span></span><span class=line><span class=cl>	<span class=kd>local</span> <span class=n>x</span><span class=o>=</span><span class=p>(</span><span class=mi>240</span><span class=o>-</span><span class=n>w</span><span class=p>)</span><span class=o>/</span><span class=mi>2</span>
-</span></span><span class=line><span class=cl>	<span class=kd>local</span> <span class=n>y</span><span class=o>=</span><span class=p>(</span><span class=mi>136</span><span class=o>-</span><span class=mi>6</span><span class=p>)</span><span class=o>/</span><span class=mi>2</span>
-</span></span><span class=line><span class=cl>	<span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=n>x</span><span class=p>,</span><span class=n>y</span><span class=p>,</span><span class=n>c</span><span class=p>,</span><span class=n>f</span><span class=p>,</span><span class=n>s</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=kd>local</span> <span class=n>f</span><span class=o>=</span><span class=n>f</span> <span class=ow>or</span> <span class=kc>false</span>
+</span></span><span class=line><span class=cl>    <span class=kd>local</span> <span class=n>s</span><span class=o>=</span><span class=n>s</span> <span class=ow>or</span> <span class=mi>1</span>
+</span></span><span class=line><span class=cl>    <span class=kd>local</span> <span class=n>w</span><span class=o>=</span><span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=o>-</span><span class=mi>8</span><span class=p>,</span><span class=o>-</span><span class=mi>8</span><span class=p>)</span><span class=o>*</span><span class=n>s</span>
+</span></span><span class=line><span class=cl>    <span class=kd>local</span> <span class=n>x</span><span class=o>=</span><span class=p>(</span><span class=mi>240</span><span class=o>-</span><span class=n>w</span><span class=p>)</span><span class=o>/</span><span class=mi>2</span>
+</span></span><span class=line><span class=cl>    <span class=kd>local</span> <span class=n>y</span><span class=o>=</span><span class=p>(</span><span class=mi>136</span><span class=o>-</span><span class=mi>6</span><span class=p>)</span><span class=o>/</span><span class=mi>2</span>
+</span></span><span class=line><span class=cl>    <span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=n>x</span><span class=p>,</span><span class=n>y</span><span class=p>,</span><span class=n>c</span><span class=p>,</span><span class=n>f</span><span class=p>,</span><span class=n>s</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span></code></pre></div><h2 id=simple-scene-manager>Simple Scene Manager</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=c1>-- global game table</span>
 </span></span><span class=line><span class=cl><span class=n>G</span><span class=o>=</span><span class=p>{</span>
-</span></span><span class=line><span class=cl>	<span class=n>runtime</span><span class=o>=</span><span class=mi>0</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>	<span class=n>SM</span><span class=o>=</span><span class=p>{}</span>
+</span></span><span class=line><span class=cl>    <span class=n>runtime</span><span class=o>=</span><span class=mi>0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>SM</span><span class=o>=</span><span class=p>{}</span>
 </span></span><span class=line><span class=cl><span class=p>}</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=c1>-- SCENE CLASS</span>
 </span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>scene</span><span class=o>=</span><span class=p>{}</span>
 </span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nc>scene</span><span class=p>:</span><span class=nf>new</span><span class=p>(</span><span class=n>o</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>o</span><span class=o>=</span><span class=n>o</span> <span class=ow>or</span> <span class=p>{}</span>
-</span></span><span class=line><span class=cl>	<span class=n>self.__index</span><span class=o>=</span><span class=n>self</span>
-</span></span><span class=line><span class=cl>	<span class=n>setmetatable</span><span class=p>(</span><span class=n>o</span><span class=p>,</span><span class=n>self</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>o.timePassed</span><span class=o>=</span><span class=mi>0</span>
-</span></span><span class=line><span class=cl>	<span class=kr>return</span> <span class=n>o</span>
+</span></span><span class=line><span class=cl>    <span class=n>o</span><span class=o>=</span><span class=n>o</span> <span class=ow>or</span> <span class=p>{}</span>
+</span></span><span class=line><span class=cl>    <span class=n>self.__index</span><span class=o>=</span><span class=n>self</span>
+</span></span><span class=line><span class=cl>    <span class=n>setmetatable</span><span class=p>(</span><span class=n>o</span><span class=p>,</span><span class=n>self</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>o.timePassed</span><span class=o>=</span><span class=mi>0</span>
+</span></span><span class=line><span class=cl>    <span class=kr>return</span> <span class=n>o</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nc>scene</span><span class=p>:</span><span class=nf>onExit</span><span class=p>()</span> <span class=kr>end</span>
@@ -124,27 +124,27 @@ defines the scale.</p><div class=highlight><pre tabindex=0 class=chroma><code cl
 </span></span><span class=line><span class=cl><span class=c1>-- SCENE MANAGER CLASS</span>
 </span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>sceneManager</span><span class=o>=</span><span class=p>{}</span>
 </span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nc>sceneManager</span><span class=p>:</span><span class=nf>create</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=n>self.__index</span><span class=o>=</span><span class=n>self</span>
-</span></span><span class=line><span class=cl>	<span class=n>o</span><span class=o>=</span><span class=n>setmetatable</span><span class=p>({},</span><span class=n>self</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>o.currentScene</span><span class=o>=</span><span class=p>{}</span>
-</span></span><span class=line><span class=cl>	<span class=n>o.scenes</span><span class=o>=</span><span class=p>{}</span>
-</span></span><span class=line><span class=cl>	<span class=kr>return</span> <span class=n>o</span>
+</span></span><span class=line><span class=cl>    <span class=n>self.__index</span><span class=o>=</span><span class=n>self</span>
+</span></span><span class=line><span class=cl>    <span class=n>o</span><span class=o>=</span><span class=n>setmetatable</span><span class=p>({},</span><span class=n>self</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>o.currentScene</span><span class=o>=</span><span class=p>{}</span>
+</span></span><span class=line><span class=cl>    <span class=n>o.scenes</span><span class=o>=</span><span class=p>{}</span>
+</span></span><span class=line><span class=cl>    <span class=kr>return</span> <span class=n>o</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nc>sceneManager</span><span class=p>:</span><span class=nf>addScene</span><span class=p>(</span><span class=n>s</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>table.insert</span><span class=p>(</span><span class=n>self.scenes</span><span class=p>,</span><span class=n>s</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>table.insert</span><span class=p>(</span><span class=n>self.scenes</span><span class=p>,</span><span class=n>s</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nc>sceneManager</span><span class=p>:</span><span class=nf>setCurrentScene</span><span class=p>(</span><span class=n>s</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>self.currentScene</span><span class=o>=</span><span class=n>s</span>
+</span></span><span class=line><span class=cl>    <span class=n>self.currentScene</span><span class=o>=</span><span class=n>s</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nc>sceneManager</span><span class=p>:</span><span class=nf>switchScene</span><span class=p>(</span><span class=n>s</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=kr>if</span> <span class=n>self.currentScene</span><span class=o>~=</span><span class=n>s</span> <span class=kr>then</span>
-</span></span><span class=line><span class=cl>		<span class=n>self.currentScene</span><span class=p>:</span><span class=n>onExit</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>		<span class=n>self.currentScene</span><span class=o>=</span><span class=n>s</span>
-</span></span><span class=line><span class=cl>		<span class=n>self.currentScene</span><span class=p>:</span><span class=n>onEnter</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=kr>end</span>
+</span></span><span class=line><span class=cl>    <span class=kr>if</span> <span class=n>self.currentScene</span><span class=o>~=</span><span class=n>s</span> <span class=kr>then</span>
+</span></span><span class=line><span class=cl>        <span class=n>self.currentScene</span><span class=p>:</span><span class=n>onExit</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=n>self.currentScene</span><span class=o>=</span><span class=n>s</span>
+</span></span><span class=line><span class=cl>        <span class=n>self.currentScene</span><span class=p>:</span><span class=n>onEnter</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=kr>end</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=c1>-- main</span>
@@ -152,61 +152,59 @@ defines the scale.</p><div class=highlight><pre tabindex=0 class=chroma><code cl
 </span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>mainMenuScene</span><span class=o>=</span><span class=n>scene</span><span class=p>:</span><span class=n>new</span><span class=p>({})</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nf>init</span><span class=p>()</span>
-</span></span><span class=line><span class=cl> 	<span class=n>G.SM</span><span class=o>=</span><span class=n>sceneManager</span><span class=p>:</span><span class=n>create</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=n>G.SM</span><span class=p>:</span><span class=n>addScene</span><span class=p>(</span><span class=n>bootScene</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>G.SM</span><span class=p>:</span><span class=n>addScene</span><span class=p>(</span><span class=n>mainMenuScene</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>G.SM</span><span class=p>:</span><span class=n>setCurrentScene</span><span class=p>(</span><span class=n>bootScene</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>G.SM</span><span class=o>=</span><span class=n>sceneManager</span><span class=p>:</span><span class=n>create</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>G.SM</span><span class=p>:</span><span class=n>addScene</span><span class=p>(</span><span class=n>bootScene</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>G.SM</span><span class=p>:</span><span class=n>addScene</span><span class=p>(</span><span class=n>mainMenuScene</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>G.SM</span><span class=p>:</span><span class=n>setCurrentScene</span><span class=p>(</span><span class=n>bootScene</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=n>init</span><span class=p>()</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nf>TIC</span><span class=p>()</span>
-</span></span><span class=line><span class=cl> <span class=kr>if</span> <span class=n>btnp</span><span class=p>(</span><span class=mi>6</span><span class=p>)</span> <span class=kr>then</span>
-</span></span><span class=line><span class=cl>		<span class=kr>if</span> <span class=n>G.SM</span><span class=p>.</span><span class=n>currentScene</span><span class=o>==</span><span class=n>bootScene</span> <span class=kr>then</span>
-</span></span><span class=line><span class=cl>				<span class=n>G.SM</span><span class=p>:</span><span class=n>switchScene</span><span class=p>(</span><span class=n>mainMenuScene</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>		<span class=kr>else</span>
-</span></span><span class=line><span class=cl>			<span class=n>G.SM</span><span class=p>:</span><span class=n>switchScene</span><span class=p>(</span><span class=n>bootScene</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>		<span class=kr>end</span>
-</span></span><span class=line><span class=cl>	<span class=kr>end</span>
-</span></span><span class=line><span class=cl>	<span class=n>G.SM</span><span class=p>.</span><span class=n>currentScene</span><span class=p>:</span><span class=n>update</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>  <span class=n>G.SM</span><span class=p>.</span><span class=n>currentScene</span><span class=p>:</span><span class=n>draw</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=n>G.runtime</span><span class=o>=</span><span class=n>G.runtime</span><span class=o>+</span><span class=mi>1</span>
-</span></span><span class=line><span class=cl>	<span class=n>printhc</span><span class=p>(</span><span class=s2>&#34;Press A to change the scene&#34;</span><span class=p>,</span><span class=mi>100</span><span class=p>,</span><span class=mi>4</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>rectb</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span><span class=mi>0</span><span class=p>,</span><span class=mi>240</span><span class=p>,</span><span class=mi>130</span><span class=p>,</span><span class=mi>4</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=kr>if</span> <span class=n>btnp</span><span class=p>(</span><span class=mi>6</span><span class=p>)</span> <span class=kr>then</span>
+</span></span><span class=line><span class=cl>        <span class=kr>if</span> <span class=n>G.SM</span><span class=p>.</span><span class=n>currentScene</span><span class=o>==</span><span class=n>bootScene</span> <span class=kr>then</span>
+</span></span><span class=line><span class=cl>            <span class=n>G.SM</span><span class=p>:</span><span class=n>switchScene</span><span class=p>(</span><span class=n>mainMenuScene</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=kr>else</span>
+</span></span><span class=line><span class=cl>            <span class=n>G.SM</span><span class=p>:</span><span class=n>switchScene</span><span class=p>(</span><span class=n>bootScene</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=kr>end</span>
+</span></span><span class=line><span class=cl>    <span class=kr>end</span>
+</span></span><span class=line><span class=cl>    <span class=n>G.SM</span><span class=p>.</span><span class=n>currentScene</span><span class=p>:</span><span class=n>update</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>G.SM</span><span class=p>.</span><span class=n>currentScene</span><span class=p>:</span><span class=n>draw</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>G.runtime</span><span class=o>=</span><span class=n>G.runtime</span><span class=o>+</span><span class=mi>1</span>
+</span></span><span class=line><span class=cl>    <span class=n>printhc</span><span class=p>(</span><span class=s2>&#34;Press A to change the scene&#34;</span><span class=p>,</span><span class=mi>100</span><span class=p>,</span><span class=mi>4</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>rectb</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span><span class=mi>0</span><span class=p>,</span><span class=mi>240</span><span class=p>,</span><span class=mi>130</span><span class=p>,</span><span class=mi>4</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=c1>-- Boot Scene</span>
 </span></span><span class=line><span class=cl><span class=n>bootScene.update</span><span class=o>=</span><span class=kr>function</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=n>bootScene.timePassed</span><span class=o>=</span>
-</span></span><span class=line><span class=cl>		<span class=n>bootScene.timePassed</span><span class=o>+</span><span class=mi>1</span>
+</span></span><span class=line><span class=cl>    <span class=n>bootScene.timePassed</span><span class=o>=</span><span class=n>bootScene.timePassed</span><span class=o>+</span><span class=mi>1</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=n>bootScene.draw</span><span class=o>=</span><span class=kr>function</span><span class=p>()</span>
-</span></span><span class=line><span class=cl> <span class=n>cls</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=n>printhc</span><span class=p>(</span><span class=s2>&#34;Boot Scene&#34;</span><span class=p>,</span><span class=mi>40</span><span class=p>,</span><span class=mi>5</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>printhc</span><span class=p>(</span><span class=s2>&#34;Scene time: &#34;</span> <span class=o>..</span> <span class=n>bootScene.timePassed</span><span class=p>,</span><span class=mi>50</span><span class=p>,</span><span class=mi>13</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>printhc</span><span class=p>(</span><span class=s2>&#34;Global time: &#34;</span> <span class=o>..</span> <span class=n>G.runtime</span><span class=p>,</span><span class=mi>60</span><span class=p>,</span><span class=mi>14</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>cls</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>printhc</span><span class=p>(</span><span class=s2>&#34;Boot Scene&#34;</span><span class=p>,</span><span class=mi>40</span><span class=p>,</span><span class=mi>5</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>printhc</span><span class=p>(</span><span class=s2>&#34;Scene time: &#34;</span> <span class=o>..</span> <span class=n>bootScene.timePassed</span><span class=p>,</span><span class=mi>50</span><span class=p>,</span><span class=mi>13</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>printhc</span><span class=p>(</span><span class=s2>&#34;Global time: &#34;</span> <span class=o>..</span> <span class=n>G.runtime</span><span class=p>,</span><span class=mi>60</span><span class=p>,</span><span class=mi>14</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=c1>-- Main Menu Scene</span>
 </span></span><span class=line><span class=cl><span class=n>mainMenuScene.update</span><span class=o>=</span><span class=kr>function</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=n>mainMenuScene.timePassed</span><span class=o>=</span>
-</span></span><span class=line><span class=cl>		<span class=n>mainMenuScene.timePassed</span><span class=o>+</span><span class=mi>1</span>
+</span></span><span class=line><span class=cl>    <span class=n>mainMenuScene.timePassed</span><span class=o>=</span><span class=n>mainMenuScene.timePassed</span><span class=o>+</span><span class=mi>1</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=n>mainMenuScene.draw</span><span class=o>=</span><span class=kr>function</span><span class=p>()</span>
-</span></span><span class=line><span class=cl> <span class=n>cls</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=n>printhc</span><span class=p>(</span><span class=s2>&#34;Main Menu Scene&#34;</span><span class=p>,</span><span class=mi>40</span><span class=p>,</span><span class=mi>10</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>printhc</span><span class=p>(</span><span class=s2>&#34;Scene time: &#34;</span> <span class=o>..</span> <span class=n>mainMenuScene.timePassed</span><span class=p>,</span><span class=mi>50</span><span class=p>,</span><span class=mi>13</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>printhc</span><span class=p>(</span><span class=s2>&#34;Global time: &#34;</span> <span class=o>..</span> <span class=n>G.runtime</span><span class=p>,</span><span class=mi>60</span><span class=p>,</span><span class=mi>14</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>cls</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>printhc</span><span class=p>(</span><span class=s2>&#34;Main Menu Scene&#34;</span><span class=p>,</span><span class=mi>40</span><span class=p>,</span><span class=mi>10</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>printhc</span><span class=p>(</span><span class=s2>&#34;Scene time: &#34;</span> <span class=o>..</span> <span class=n>mainMenuScene.timePassed</span><span class=p>,</span><span class=mi>50</span><span class=p>,</span><span class=mi>13</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>printhc</span><span class=p>(</span><span class=s2>&#34;Global time: &#34;</span> <span class=o>..</span> <span class=n>G.runtime</span><span class=p>,</span><span class=mi>60</span><span class=p>,</span><span class=mi>14</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=c1>-- short general helper functions</span>
 </span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nf>max</span><span class=p>(</span><span class=n>n1</span><span class=p>,</span><span class=n>n2</span><span class=p>)</span> <span class=kr>return</span> <span class=n>math.max</span><span class=p>(</span><span class=n>n1</span><span class=p>,</span><span class=n>n2</span><span class=p>)</span> <span class=kr>end</span>
 </span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nf>printhc</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=n>y</span><span class=p>,</span><span class=n>c</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=kd>local</span> <span class=n>w</span><span class=o>=</span><span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=o>-</span><span class=mi>8</span><span class=p>,</span><span class=o>-</span><span class=mi>8</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=kd>local</span> <span class=n>x</span><span class=o>=</span><span class=p>(</span><span class=mi>240</span><span class=o>-</span><span class=n>w</span><span class=p>)</span><span class=o>/</span><span class=mi>2</span>
-</span></span><span class=line><span class=cl>	<span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=n>x</span><span class=p>,</span><span class=n>y</span><span class=p>,</span><span class=n>c</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=kd>local</span> <span class=n>w</span><span class=o>=</span><span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=o>-</span><span class=mi>8</span><span class=p>,</span><span class=o>-</span><span class=mi>8</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=kd>local</span> <span class=n>x</span><span class=o>=</span><span class=p>(</span><span class=mi>240</span><span class=o>-</span><span class=n>w</span><span class=p>)</span><span class=o>/</span><span class=mi>2</span>
+</span></span><span class=line><span class=cl>    <span class=n>print</span><span class=p>(</span><span class=n>t</span><span class=p>,</span><span class=n>x</span><span class=p>,</span><span class=n>y</span><span class=p>,</span><span class=n>c</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span></code></pre></div><h2 id=finite-state-machine>Finite state machine</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=c1>-- FINITE STATE MACHINE</span>
 </span></span><span class=line><span class=cl>
@@ -214,41 +212,41 @@ defines the scale.</p><div class=highlight><pre tabindex=0 class=chroma><code cl
 </span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>fsmBase</span><span class=o>=</span><span class=p>{}</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nc>fsmBase</span><span class=p>:</span><span class=nf>new</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=n>self.__index</span><span class=o>=</span><span class=n>self</span>
-</span></span><span class=line><span class=cl>	<span class=n>o</span><span class=o>=</span><span class=n>setmetatable</span><span class=p>({},</span><span class=n>self</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>o.states</span><span class=o>=</span><span class=p>{}</span>
-</span></span><span class=line><span class=cl>	<span class=n>o.curState</span><span class=o>=</span><span class=kc>nil</span>
-</span></span><span class=line><span class=cl>	<span class=kr>return</span> <span class=n>o</span>
+</span></span><span class=line><span class=cl>    <span class=n>self.__index</span><span class=o>=</span><span class=n>self</span>
+</span></span><span class=line><span class=cl>    <span class=n>o</span><span class=o>=</span><span class=n>setmetatable</span><span class=p>({},</span><span class=n>self</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>o.states</span><span class=o>=</span><span class=p>{}</span>
+</span></span><span class=line><span class=cl>    <span class=n>o.curState</span><span class=o>=</span><span class=kc>nil</span>
+</span></span><span class=line><span class=cl>    <span class=kr>return</span> <span class=n>o</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nc>fsmBase</span><span class=p>:</span><span class=nf>addState</span><span class=p>(</span><span class=n>s</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>self.states</span><span class=p>[</span><span class=n>s.name</span><span class=p>]</span><span class=o>=</span><span class=n>s</span>
+</span></span><span class=line><span class=cl>    <span class=n>self.states</span><span class=p>[</span><span class=n>s.name</span><span class=p>]</span><span class=o>=</span><span class=n>s</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nc>fsmBase</span><span class=p>:</span><span class=nf>setCurrentState</span><span class=p>(</span><span class=n>s</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>self.curState</span><span class=o>=</span><span class=n>s</span>
+</span></span><span class=line><span class=cl>    <span class=n>self.curState</span><span class=o>=</span><span class=n>s</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nc>fsmBase</span><span class=p>:</span><span class=nf>update</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=n>self.curState</span><span class=p>:</span><span class=n>onUpdate</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>self.curState</span><span class=p>:</span><span class=n>onUpdate</span><span class=p>()</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nc>fsmBase</span><span class=p>:</span><span class=nf>switch</span><span class=p>(</span><span class=n>n</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=kr>if</span> <span class=n>self.curState</span><span class=p>.</span><span class=n>name</span><span class=o>~=</span><span class=n>n</span> <span class=kr>then</span>
-</span></span><span class=line><span class=cl>		<span class=n>self.curState</span><span class=p>:</span><span class=n>onExit</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>		<span class=n>self.curState</span><span class=o>=</span><span class=n>self.states</span><span class=p>[</span><span class=n>n</span><span class=p>]</span>
-</span></span><span class=line><span class=cl>		<span class=n>self.curState</span><span class=p>:</span><span class=n>onEnter</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=kr>end</span>
+</span></span><span class=line><span class=cl>    <span class=kr>if</span> <span class=n>self.curState</span><span class=p>.</span><span class=n>name</span><span class=o>~=</span><span class=n>n</span> <span class=kr>then</span>
+</span></span><span class=line><span class=cl>        <span class=n>self.curState</span><span class=p>:</span><span class=n>onExit</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=n>self.curState</span><span class=o>=</span><span class=n>self.states</span><span class=p>[</span><span class=n>n</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>        <span class=n>self.curState</span><span class=p>:</span><span class=n>onEnter</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=kr>end</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=c1>-- Base State</span>
 </span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>baseState</span><span class=o>=</span><span class=p>{}</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nc>baseState</span><span class=p>:</span><span class=nf>new</span><span class=p>(</span><span class=n>n</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>self.__index</span><span class=o>=</span><span class=n>self</span>
-</span></span><span class=line><span class=cl>	<span class=n>o</span><span class=o>=</span><span class=n>setmetatable</span><span class=p>({},</span><span class=n>self</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>o.name</span><span class=o>=</span><span class=n>n</span>
-</span></span><span class=line><span class=cl>	<span class=kr>return</span> <span class=n>o</span>
+</span></span><span class=line><span class=cl>    <span class=n>self.__index</span><span class=o>=</span><span class=n>self</span>
+</span></span><span class=line><span class=cl>    <span class=n>o</span><span class=o>=</span><span class=n>setmetatable</span><span class=p>({},</span><span class=n>self</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>o.name</span><span class=o>=</span><span class=n>n</span>
+</span></span><span class=line><span class=cl>    <span class=kr>return</span> <span class=n>o</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nc>baseState</span><span class=p>:</span><span class=nf>onEnter</span><span class=p>()</span> <span class=kr>end</span>
@@ -259,47 +257,47 @@ defines the scale.</p><div class=highlight><pre tabindex=0 class=chroma><code cl
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>particle</span> <span class=o>=</span> <span class=p>{}</span>
 </span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nc>particle</span><span class=p>:</span><span class=nf>new</span><span class=p>(</span><span class=n>x</span><span class=p>,</span><span class=n>y</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>self.__index</span><span class=o>=</span><span class=n>self</span>
-</span></span><span class=line><span class=cl>	<span class=n>o</span> <span class=o>=</span> <span class=n>setmetatable</span><span class=p>({},</span> <span class=n>self</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>o.x</span> <span class=o>=</span> <span class=n>x</span>
-</span></span><span class=line><span class=cl>	<span class=n>o.y</span> <span class=o>=</span> <span class=n>y</span>
-</span></span><span class=line><span class=cl>	<span class=n>o.dx</span> <span class=o>=</span> <span class=n>rnd</span><span class=p>(</span><span class=o>-</span><span class=mi>8</span><span class=p>,</span><span class=mi>8</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>o.dy</span> <span class=o>=</span> <span class=n>rnd</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span><span class=mi>0</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>o.life</span> <span class=o>=</span> <span class=n>rnd</span><span class=p>(</span><span class=mi>2</span><span class=p>,</span><span class=mi>40</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>o.color</span> <span class=o>=</span> <span class=n>rnd</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span><span class=mi>15</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=kr>return</span> <span class=n>o</span>
+</span></span><span class=line><span class=cl>    <span class=n>self.__index</span><span class=o>=</span><span class=n>self</span>
+</span></span><span class=line><span class=cl>    <span class=n>o</span> <span class=o>=</span> <span class=n>setmetatable</span><span class=p>({},</span> <span class=n>self</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>o.x</span> <span class=o>=</span> <span class=n>x</span>
+</span></span><span class=line><span class=cl>    <span class=n>o.y</span> <span class=o>=</span> <span class=n>y</span>
+</span></span><span class=line><span class=cl>    <span class=n>o.dx</span> <span class=o>=</span> <span class=n>rnd</span><span class=p>(</span><span class=o>-</span><span class=mi>8</span><span class=p>,</span><span class=mi>8</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>o.dy</span> <span class=o>=</span> <span class=n>rnd</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span><span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>o.life</span> <span class=o>=</span> <span class=n>rnd</span><span class=p>(</span><span class=mi>2</span><span class=p>,</span><span class=mi>40</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>o.color</span> <span class=o>=</span> <span class=n>rnd</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span><span class=mi>15</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=kr>return</span> <span class=n>o</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nc>particle</span><span class=p>:</span><span class=nf>update</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>		<span class=n>self.x</span> <span class=o>=</span> <span class=n>self.x</span> <span class=o>+</span> <span class=n>self.dx</span>
-</span></span><span class=line><span class=cl>		<span class=n>self.y</span> <span class=o>=</span> <span class=n>self.y</span> <span class=o>+</span> <span class=n>self.dy</span>
-</span></span><span class=line><span class=cl>		<span class=n>self.life</span> <span class=o>=</span> <span class=n>self.life</span> <span class=o>-</span> <span class=mi>1</span>
-</span></span><span class=line><span class=cl>		<span class=kr>if</span> <span class=n>self.life</span> <span class=o>&lt;</span> <span class=mi>0</span> <span class=kr>then</span>
-</span></span><span class=line><span class=cl>		 <span class=kd>local</span> <span class=n>i</span> <span class=o>=</span> <span class=n>tblFind</span><span class=p>(</span><span class=n>particles</span><span class=p>,</span><span class=n>self</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>			<span class=n>table.remove</span><span class=p>(</span><span class=n>particles</span><span class=p>,</span><span class=n>i</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>		<span class=kr>end</span>
+</span></span><span class=line><span class=cl>    <span class=n>self.x</span> <span class=o>=</span> <span class=n>self.x</span> <span class=o>+</span> <span class=n>self.dx</span>
+</span></span><span class=line><span class=cl>    <span class=n>self.y</span> <span class=o>=</span> <span class=n>self.y</span> <span class=o>+</span> <span class=n>self.dy</span>
+</span></span><span class=line><span class=cl>    <span class=n>self.life</span> <span class=o>=</span> <span class=n>self.life</span> <span class=o>-</span> <span class=mi>1</span>
+</span></span><span class=line><span class=cl>    <span class=kr>if</span> <span class=n>self.life</span> <span class=o>&lt;</span> <span class=mi>0</span> <span class=kr>then</span>
+</span></span><span class=line><span class=cl>        <span class=kd>local</span> <span class=n>i</span> <span class=o>=</span> <span class=n>tblFind</span><span class=p>(</span><span class=n>particles</span><span class=p>,</span><span class=n>self</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>table.remove</span><span class=p>(</span><span class=n>particles</span><span class=p>,</span><span class=n>i</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=kr>end</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nc>particle</span><span class=p>:</span><span class=nf>draw</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>		<span class=n>pix</span><span class=p>(</span><span class=n>self.x</span><span class=p>,</span><span class=n>self.y</span><span class=p>,</span><span class=n>self.color</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>pix</span><span class=p>(</span><span class=n>self.x</span><span class=p>,</span><span class=n>self.y</span><span class=p>,</span><span class=n>self.color</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=c1>-- main</span>
 </span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nf>TIC</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>  <span class=n>ins</span><span class=p>(</span><span class=n>particles</span><span class=p>,</span><span class=n>particle</span><span class=p>:</span><span class=n>new</span><span class=p>(</span><span class=mi>118</span><span class=p>,</span><span class=mi>58</span><span class=p>))</span>
-</span></span><span class=line><span class=cl>  <span class=n>updateParticles</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>  <span class=n>drawParticles</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>ins</span><span class=p>(</span><span class=n>particles</span><span class=p>,</span><span class=n>particle</span><span class=p>:</span><span class=n>new</span><span class=p>(</span><span class=mi>118</span><span class=p>,</span><span class=mi>58</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=n>updateParticles</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>drawParticles</span><span class=p>()</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nf>updateParticles</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=kr>for</span> <span class=n>_</span><span class=p>,</span><span class=n>v</span> <span class=kr>in</span> <span class=n>pairs</span><span class=p>(</span><span class=n>particles</span><span class=p>)</span> <span class=kr>do</span>
-</span></span><span class=line><span class=cl>		<span class=n>v</span><span class=p>:</span><span class=n>update</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=kr>end</span>
+</span></span><span class=line><span class=cl>    <span class=kr>for</span> <span class=n>_</span><span class=p>,</span><span class=n>v</span> <span class=kr>in</span> <span class=n>pairs</span><span class=p>(</span><span class=n>particles</span><span class=p>)</span> <span class=kr>do</span>
+</span></span><span class=line><span class=cl>        <span class=n>v</span><span class=p>:</span><span class=n>update</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=kr>end</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nf>drawParticles</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=kr>for</span> <span class=n>_</span><span class=p>,</span><span class=n>v</span> <span class=kr>in</span> <span class=n>pairs</span><span class=p>(</span><span class=n>particles</span><span class=p>)</span> <span class=kr>do</span>
-</span></span><span class=line><span class=cl>		<span class=n>v</span><span class=p>:</span><span class=n>draw</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=kr>end</span>
+</span></span><span class=line><span class=cl>    <span class=kr>for</span> <span class=n>_</span><span class=p>,</span><span class=n>v</span> <span class=kr>in</span> <span class=n>pairs</span><span class=p>(</span><span class=n>particles</span><span class=p>)</span> <span class=kr>do</span>
+</span></span><span class=line><span class=cl>        <span class=n>v</span><span class=p>:</span><span class=n>draw</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=kr>end</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span></code></pre></div></div></div><footer class="text-light mb-5 small text-center">&#169; 2022 digitsensitive</footer></body></html>
