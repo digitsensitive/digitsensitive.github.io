@@ -20,7 +20,7 @@ body .navbar a:hover,
 head .navbar a:hover,
 body .navbar a:active,
 head .navbar a:active {
-  color: #ff69b4;
+  color: #ff79c6;
 }
 body .blinking-cursor-welcome,
 head .blinking-cursor-welcome {
@@ -33,7 +33,7 @@ head .blinking-cursor-welcome:after {
   content: '';
   width: 20px;
   height: 30px;
-  background: #ff69b4;
+  background: #ff79c6;
   display: inline-block;
   animation: cursor-blink 1.5s steps(2) infinite;
 }
@@ -48,7 +48,7 @@ head .container-fluid .navbar-brand:after {
   content: '';
   width: 10px;
   height: 20px;
-  background: #ff69b4;
+  background: #ff79c6;
   display: inline-block;
   animation: cursor-blink 1.5s steps(2) infinite;
 }
@@ -66,7 +66,7 @@ body .container a:hover,
 head .container a:hover {
   border: none;
   text-decoration: none;
-  box-shadow: inset 0 -4px 0 #ff69b4;
+  box-shadow: inset 0 -4px 0 #ff79c6;
   transition-property: box-shadow;
   transition-duration: 0.1s;
 }
