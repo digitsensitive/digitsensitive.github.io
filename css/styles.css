@@ -94,7 +94,9 @@ head .container h4 a:visited {
   text-decoration: none;
 }
 body .container ul,
-head .container ul {
+head .container ul,
+body .container ol,
+head .container ol {
   list-style-type: disc;
   list-style-position: outside;
   margin-left: 1em;
