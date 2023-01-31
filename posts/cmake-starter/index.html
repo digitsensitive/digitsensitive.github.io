@@ -1,0 +1,96 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="initial-scale=1,width=device-width"><link crossorigin=anonymous href=https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css integrity=sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor rel=stylesheet><script crossorigin=anonymous integrity=sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2 src=https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js></script>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css><link href=/favicon.ico rel=icon><link rel=stylesheet href=/css/syntax.css><link rel=stylesheet href=/css/styles.css><title>digitsensitive</title></head><body class="p-3 bg-dark"><nav class="navbar navbar-dark navbar-expand-lg"><div class=container-fluid><a class=navbar-brand href=/>Hello</a>
+<button aria-controls=navbar aria-expanded=false aria-label="Toggle navigation" class=navbar-toggler data-bs-target=#navbar data-bs-toggle=collapse type=button>
+<span class=navbar-toggler-icon></span></button><div class="collapse navbar-collapse" id=navbar><ul class="navbar-nav ml-auto"><li class=nav-item><a class=nav-link href=/about/ title>About</a></li><li class=nav-item><a class=nav-link href=/notes/ title>Notes</a></li><li class=nav-item><a class=nav-link href=/posts/ title>Posts</a></li></ul></div></div></nav><div class="container text-light py-4 mx-auto" style=max-width:600px><h1>Your start with CMake: As simple as it can get</h1><h6>January 31, 2023</h6><div class="row mt-4 my-4"><p>When I recently started to work with CMake for a C++ project, I did find it
+difficult to start with it. The documentation is great, but extensive. There are
+of course multiple helpful articles and tutorials around, but I was already
+struggling with the simplest commands.</p><p>This article is mainly for the people, who use CMake for the first time. I will
+try to use as less words and to be as clear as possible. Surely it will not be
+complete and I can not guarantee full correctness. Comments and corrections are
+welcome!</p><p>Find the whole source code at Github:
+<a href=https://github.com/digitsensitive/cmake-starter>https://github.com/digitsensitive/cmake-starter</a></p><h2 id=what-is-cmake>What is CMake?</h2><p><a href=https://cmake.org>CMake</a> is an extensible, open-source system that manages the
+build process in an operating system and in a compiler-independent manner
+(<a href=https://cmake.org/overview>taken from the official website</a>). There are
+<a href=https://en.wikipedia.org/wiki/List_of_build_automation_software#Build_script_generation>alternative tools</a>.</p><p>This all sounds good. But seriously, what is CMake exactly and why should I use
+it?</p><p>You should use it, because with one configuration file (CMakeLists.txt) you can
+generate standard build files to be used by a native build environment (f.e.
+Make, Apple’s Xcode, Qt Creator, Ninja, Microsoft Visual Studio) to create the
+actual building (= your application). You can get full flexibility and make your
+project more future-proof.</p><p>CMake has minimal dependencies, requiring only a C++ compiler on its own build
+system.</p><p>## Let’s dive in</p><p>Enough general talk: Let’s create our first (very complicated!) C++ project:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><p>This is our <strong>main.cpp</strong> file and I have placed it into a folder called <strong>src</strong>.
+Additionally we need a folder named <strong>build</strong> in the root.</p><p>We place our CMake configuration file (<strong>CMakeLists.txt</strong>) in the root. This is
+our final folder tree structure:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-makefile data-lang=makefile><span class=line><span class=cl><span class=err>.</span>
+</span></span><span class=line><span class=cl><span class=err>├──</span> <span class=err>CMakeLists.txt</span>
+</span></span><span class=line><span class=cl><span class=err>├──</span> <span class=err>build</span>
+</span></span><span class=line><span class=cl><span class=err>└──</span> <span class=err>src</span>
+</span></span><span class=line><span class=cl>    <span class=err>└──</span> <span class=err>main.cpp</span>
+</span></span></code></pre></div><p>At this point make sure you have <strong>CMake</strong> installed on your computer!</p><h2 id=cmakeliststxt>CMakeLists.txt</h2><p>For the rest of this article, we will focus on creating our first simple
+configuration file. You can find the whole configuration file at the end of this
+article.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-makefile data-lang=makefile><span class=line><span class=cl><span class=err>cmake_minimum_required(VERSION</span> <span class=err>3.18.1)</span>
+</span></span></code></pre></div><p>At first you should set the minimum required
+<a href="https://cmake.org/cmake/help/v3.18/command/cmake_minimum_required.html?highlight=cmake_minimum_required">CMake version</a>.
+If your local version of CMake is lower than the minimum, it will stop
+processing the project and report an error. You might want to set three
+variables <code>VERSION_MAJOR</code>, <code>VERSION_MINOR</code> and <code>VERSION_REVISION</code> and use them
+(as it is in the
+<a href=https://github.com/digitsensitive/cmake-starter>github repository</a>).</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-makefile data-lang=makefile><span class=line><span class=cl><span class=err>set(CMAKE_CXX_STANDARD</span> <span class=err>11)</span>
+</span></span></code></pre></div><p>Next we set the variable
+<a href=https://cmake.org/cmake/help/v3.18/variable/CMAKE_CXX_STANDARD.html#variable:CMAKE_CXX_STANDARD>CMAKE_CXX_STANDARD</a>
+to define the C++ standard whose features we request to build the project.
+Supported values are <code>98</code>, <code>11</code>, <code>14</code>, <code>17</code>, and <code>20</code>.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-makefile data-lang=makefile><span class=line><span class=cl><span class=err>set(CMAKE_CXX_STANDARD_REQUIRED</span> <span class=err>ON)</span>
+</span></span></code></pre></div><p>Now we want to set the C++ standard to be required. For this we set the variable
+<a href=https://cmake.org/cmake/help/v3.18/prop_tgt/CXX_STANDARD_REQUIRED.html#prop_tgt:CXX_STANDARD_REQUIRED>CMAKE_CXX_STANDARD_REQUIRED</a>
+to <code>ON</code>.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-makefile data-lang=makefile><span class=line><span class=cl><span class=err>project(myProject</span> <span class=err>VERSION</span> <span class=err>0.1.0)</span>
+</span></span></code></pre></div><p>We can now
+<a href=https://cmake.org/cmake/help/v3.18/command/project.html#command:project>set our project name</a>
+and the version (optional). More optional variables are <code>DESCRIPTION</code>,
+<code>HOMEPAGE_URL</code> and <code>LANGUAGES</code>. From now on you can refer to your project name
+with the variable <code>PROJECT_NAME</code>, which is recommended to minimize typing
+errors.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-makefile data-lang=makefile><span class=line><span class=cl><span class=err>add_executable(${PROJECT_NAME}</span> <span class=err>src/main.cpp)</span>
+</span></span></code></pre></div><p>Finally we
+<a href="https://cmake.org/cmake/help/v3.18/command/add_executable.html?highlight=add_executable">add an executable</a>
+to our project, for which we use our predefined variable <code>PROJECT_NAME</code>. We also
+add a list of our source files.</p><p>At this point we are done with our basic <strong>CMakeLists.txt</strong> file.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-makefile data-lang=makefile><span class=line><span class=cl><span class=err>cmake_minimum_required(VERSION</span> <span class=err>3.18.1)</span>
+</span></span><span class=line><span class=cl><span class=err>set(CMAKE_CXX_STANDARD</span> <span class=err>11)</span>
+</span></span><span class=line><span class=cl><span class=err>set(CMAKE_CXX_STANDARD_REQUIRED</span> <span class=err>ON)</span>
+</span></span><span class=line><span class=cl><span class=err>project(myProject</span> <span class=err>VERSION</span> <span class=err>0.1.0)</span>
+</span></span><span class=line><span class=cl><span class=err>add_executable(${PROJECT_NAME}</span> <span class=err>main.cpp)</span>
+</span></span></code></pre></div><h2 id=generate>Generate!</h2><p>With our CMakeLists.txt file we finished our project. We can now generate the
+standard build files (= a project build system). Open your terminal and navigate
+to the empty <strong>build</strong> folder.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>cmake ..
+</span></span></code></pre></div><p>With <code>cmake</code> you access the
+<a href=https://cmake.org/cmake/help/v3.18/manual/cmake.1.html>command-line interface</a>
+of the buildsystem generator CMake. With the <code>..</code> you hand over the path to the
+source. This path must contain a <code>CMakeLists.txt</code> file. Now you should have your
+build files!</p><p>Finally we want to build the executable file. I use <code>make</code>, so I simply have to
+run the following command in the build folder:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>make
+</span></span></code></pre></div><p>If you like you can replace this line and use this instead:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>cmake --build
+</span></span></code></pre></div><p>This will call <code>make</code> or whatever build tool you are using.</p><p>This is it. There would be much more to write. But I guess that is enough for a
+start. Comments or corrections are always welcome!</p><p>## Modern CMake</p><p>After publishing this story I received important and helpful advises. I want to
+sum it up here:</p><ul><li>Do not use file(<strong>GLOB</strong>) in your projects: I used it to collect source files
+from the project. The problem is, that if you add new source code files, that
+you will not make any changes in your CMakeLists.txt file. Therefor the
+generated build system cannot know when to ask CMake to regenerate. You should
+list your source file with the
+<a href=https://cmake.org/cmake/help/latest/command/add_executable.html>add_executable</a>
+call.</li><li>Use targets! Forget f.e. the command <code>include_directories</code> and use
+<a href=https://cmake.org/cmake/help/v3.18/command/target_include_directories.html>target_include_directories</a>
+instead. You will have to call
+<a href=https://cmake.org/cmake/help/latest/command/add_executable.html>add_executable</a>
+before. The problem with <code>include_directories</code> is, that it operates on the
+directory level. This means that all the targets on that level inherit the
+properties. That makes it difficult to control.</li></ul><p>I just began to read about Modern CMake and can recommend the following
+ressources:</p><h2 id=references>References</h2><ul><li><a href=https://gist.github.com/mbinna/c61dbb39bca0e4fb7d1f73b0d66a4fd1>Effective Modern CMake GitHub Gist</a></li><li><a href=https://cliutils.gitlab.io/modern-cmake>An Introduction to Modern CMake</a></li></ul></div><span class="p-2 my-1 mx-auto badge text-bg-dark">Build system</span>
+<span class="p-2 my-1 mx-auto badge text-bg-dark">C</span>
+<span class="p-2 my-1 mx-auto badge text-bg-dark">C++</span>
+<span class="p-2 my-1 mx-auto badge text-bg-dark">Cplusplus</span>
+<span class="p-2 my-1 mx-auto badge text-bg-dark">CMake</span>
+<span class="p-2 my-1 mx-auto badge text-bg-dark">CMakeLists.txt</span>
+<span class="p-2 my-1 mx-auto badge text-bg-dark">Cross-platform</span>
+<span class="p-2 my-1 mx-auto badge text-bg-dark">Dependencies</span>
+<span class="p-2 my-1 mx-auto badge text-bg-dark">Generators</span>
+<span class="p-2 my-1 mx-auto badge text-bg-dark">Libraries</span>
+<span class="p-2 my-1 mx-auto badge text-bg-dark">Object-Oriented Programming</span></div><footer class="text-light mb-5 small text-center">&#169; 2022-2023 digitsensitive</footer></body></html>
