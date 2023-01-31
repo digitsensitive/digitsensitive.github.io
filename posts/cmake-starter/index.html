@@ -2,9 +2,9 @@
 <link rel=stylesheet href=https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css><link href=/favicon.ico rel=icon><link rel=stylesheet href=/css/syntax.css><link rel=stylesheet href=/css/styles.css><title>digitsensitive</title></head><body class="p-3 bg-dark"><nav class="navbar navbar-dark navbar-expand-lg"><div class=container-fluid><a class=navbar-brand href=/>Hello</a>
 <button aria-controls=navbar aria-expanded=false aria-label="Toggle navigation" class=navbar-toggler data-bs-target=#navbar data-bs-toggle=collapse type=button>
 <span class=navbar-toggler-icon></span></button><div class="collapse navbar-collapse" id=navbar><ul class="navbar-nav ml-auto"><li class=nav-item><a class=nav-link href=/about/ title>About</a></li><li class=nav-item><a class=nav-link href=/notes/ title>Notes</a></li><li class=nav-item><a class=nav-link href=/posts/ title>Posts</a></li></ul></div></div></nav><div class="container text-light py-4 mx-auto" style=max-width:600px><h1>Your start with CMake: As simple as it can get</h1><h6>January 31, 2023</h6><div class="row mt-4 my-4"><p>When I recently started to work with CMake for a C++ project, I did find it
-difficult to start with it. The documentation is great, but extensive. There are
-of course multiple helpful articles and tutorials around, but I was already
-struggling with the simplest commands.</p><p>This article is mainly for the people, who use CMake for the first time. I will
+challenging to get started with. The documentation is comprehensive but can be
+overwhelming. There are of course multiple helpful articles and tutorials
+around, but I was already struggling with the simplest commands.</p><p>This article is mainly for the people, who use CMake for the first time. I will
 try to use as less words and to be as clear as possible. Surely it will not be
 complete and I can not guarantee full correctness. Comments and corrections are
 welcome!</p><p>Find the whole source code at Github:
@@ -28,8 +28,8 @@ our final folder tree structure:</p><div class=highlight><pre tabindex=0 class=c
 </span></span><span class=line><span class=cl><span class=err>└──</span> <span class=err>src</span>
 </span></span><span class=line><span class=cl>    <span class=err>└──</span> <span class=err>main.cpp</span>
 </span></span></code></pre></div><p>At this point make sure you have <strong>CMake</strong> installed on your computer!</p><h2 id=cmakeliststxt>CMakeLists.txt</h2><p>For the rest of this article, we will focus on creating our first simple
-configuration file. You can find the whole configuration file at the end of this
-article.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-makefile data-lang=makefile><span class=line><span class=cl><span class=err>cmake_minimum_required(VERSION</span> <span class=err>3.18.1)</span>
+configuration file. You can find the whole configuration file in the source code
+repository linked in the article.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-makefile data-lang=makefile><span class=line><span class=cl><span class=err>cmake_minimum_required(VERSION</span> <span class=err>3.18.1)</span>
 </span></span></code></pre></div><p>At first you should set the minimum required
 <a href="https://cmake.org/cmake/help/v3.18/command/cmake_minimum_required.html?highlight=cmake_minimum_required">CMake version</a>.
 If your local version of CMake is lower than the minimum, it will stop
