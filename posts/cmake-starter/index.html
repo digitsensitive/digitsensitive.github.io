@@ -69,7 +69,7 @@ build files!</p><p>Finally we want to build the executable file. I use <code>mak
 run the following command in the build folder:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>make
 </span></span></code></pre></div><p>If you like you can replace this line and use this instead:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>cmake --build
 </span></span></code></pre></div><p>This will call <code>make</code> or whatever build tool you are using.</p><p>This is it. There would be much more to write. But I guess that is enough for a
-start. Comments or corrections are always welcome!</p><p>## Modern CMake</p><p>After publishing this story I received important and helpful advises. I want to
+start. Comments or corrections are always welcome!</p><h2 id=modern-cmake>Modern CMake</h2><p>After publishing this story I received important and helpful advises. I want to
 sum it up here:</p><ul><li>Do not use file(<strong>GLOB</strong>) in your projects: I used it to collect source files
 from the project. The problem is, that if you add new source code files, that
 you will not make any changes in your CMakeLists.txt file. Therefor the
