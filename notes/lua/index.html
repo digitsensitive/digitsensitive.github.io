@@ -46,9 +46,11 @@ also declare as local.</p><div class=highlight><pre tabindex=0 class=chroma><cod
 </span></span><span class=line><span class=cl><span class=o>^</span>
 </span></span></code></pre></div><h3 id=logic>Logic</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kc>nil</span> <span class=ow>and</span> <span class=kc>false</span>  <span class=c1>--&gt; nil</span>
 </span></span><span class=line><span class=cl><span class=kc>false</span> <span class=ow>and</span> <span class=kc>nil</span>  <span class=c1>--&gt; false</span>
+</span></span><span class=line><span class=cl><span class=kc>true</span>           <span class=c1>--&gt; true</span>
 </span></span><span class=line><span class=cl><span class=mi>0</span> <span class=ow>and</span> <span class=mi>20</span>       <span class=c1>--&gt; 20</span>
 </span></span><span class=line><span class=cl><span class=mi>10</span> <span class=ow>and</span> <span class=mi>20</span>      <span class=c1>--&gt; 20</span>
-</span></span></code></pre></div><h2 id=enumerations>Enumerations</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kd>local</span> <span class=n>COLORS</span> <span class=o>=</span> <span class=p>{</span>
+</span></span></code></pre></div><blockquote><p><code>false</code> and <code>nil</code> are distinct: false represents the logical false state, nil
+represents the absence of a value</p></blockquote><h2 id=enumerations>Enumerations</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kd>local</span> <span class=n>COLORS</span> <span class=o>=</span> <span class=p>{</span>
 </span></span><span class=line><span class=cl>  <span class=n>BLUE</span> <span class=o>=</span> <span class=mi>1</span><span class=p>,</span>
 </span></span><span class=line><span class=cl>  <span class=n>GREEN</span> <span class=o>=</span> <span class=mi>2</span><span class=p>,</span>
 </span></span><span class=line><span class=cl>  <span class=n>RED</span> <span class=o>=</span> <span class=mi>3</span>
