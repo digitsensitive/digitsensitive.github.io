@@ -1,15 +1,9 @@
-@font-color: #abb2c0;
-@link-color: #ff79c6;
-@bg-dark: #171a21;
-
-/* Customized Bootstrap Theming */
-.bg-dark {
-  background-color: @bg-dark !important;
-}
-
-.text-light {
-  color: @font-color !important;
-}
+@font-color: #ffffff;
+@link-color: #2dba4e;
+@bg-dark: #2b3137;
+@footer-bg-color: #24292e;
+@header-bg-color: #24292e;
+@header-color: #ff8343;
 
 @keyframes cursor-blink {
   0% {
@@ -17,17 +11,88 @@
   }
 }
 
+html {
+  font-family: 'Lato', sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* Base styles for headings */
+h1 {
+  font-size: 2.5rem; /* Largest heading */
+  letter-spacing: normal;
+  font-weight: 600;
+  font-style: normal;
+  color: #fafbfc;
+}
+
+h2 {
+  font-size: 2rem; /* Slightly smaller than h1 */
+  letter-spacing: normal;
+  font-weight: 600;
+  font-style: normal;
+}
+
+h3 {
+  font-size: 1.75rem; /* Smaller than h2 */
+  letter-spacing: normal;
+  font-weight: 600;
+  font-style: normal;
+}
+
+h4 {
+  font-size: 1.5rem; /* Smaller than h3 */
+  letter-spacing: normal;
+  font-weight: 600;
+  font-style: normal;
+}
+
+h5 {
+  font-size: 1.25rem; /* Smaller than h4 */
+  letter-spacing: normal;
+  font-weight: 600;
+  font-style: normal;
+}
+
+h6 {
+  font-size: 1rem; /* Smallest heading */
+  letter-spacing: normal;
+  font-weight: 600;
+  font-style: normal;
+}
+
 body,
 head {
-  .navbar {
-    a:link,
-    a:visited {
-      color: @font-color;
-    }
+  background: @bg-dark;
+  color: @font-color;
 
-    a:hover,
-    a:active {
-      color: @link-color;
+  .navbar {
+    background: @header-bg-color;
+
+    .container-fluid {
+      a:link,
+      a:visited {
+        color: @font-color;
+      }
+
+      a:hover,
+      a:active {
+        color: @link-color;
+      }
+
+      .navbar-toggler {
+        margin: 0;
+        padding: 0;
+        display: block !important;
+        border: none;
+        color: @font-color;
+
+        &:focus,
+        &active {
+          outline: none;
+          box-shadow: none;
+        }
+      }
     }
   }
 
@@ -112,6 +177,52 @@ head {
       list-style-type: disc;
       list-style-position: outside;
       margin-left: 1em;
+    }
+  }
+}
+
+/* FOOTER */
+footer {
+  margin: 0;
+  padding: 0;
+  background-color: @footer-bg-color;
+
+  .container {
+    p {
+      color: @font-color;
+      font-size: 0.8rem;
+    }
+
+    .heading {
+      font-weight: 700;
+    }
+
+    i {
+      color: @link-color;
+    }
+
+    a {
+      &:link,
+      &:visited,
+      &:hover {
+        color: @font-color;
+        text-decoration: none;
+      }
+
+      &:active {
+        color: @font-color;
+      }
+    }
+
+    .social-icons {
+      i {
+        color: #2dba4e;
+        margin-right: 5px;
+      }
+
+      i:last-child {
+        margin-right: 0;
+      }
     }
   }
 }

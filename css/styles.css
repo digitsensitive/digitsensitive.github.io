@@ -1,26 +1,92 @@
-/* Customized Bootstrap Theming */
-.bg-dark {
-  background-color: #171a21 !important;
-}
-.text-light {
-  color: #abb2c0 !important;
-}
 @keyframes cursor-blink {
   0% {
     opacity: 0;
   }
 }
-body .navbar a:link,
-head .navbar a:link,
-body .navbar a:visited,
-head .navbar a:visited {
-  color: #abb2c0;
+html {
+  font-family: 'Lato', sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
 }
-body .navbar a:hover,
-head .navbar a:hover,
-body .navbar a:active,
-head .navbar a:active {
-  color: #ff79c6;
+/* Base styles for headings */
+h1 {
+  font-size: 2.5rem;
+  /* Largest heading */
+  letter-spacing: normal;
+  font-weight: 600;
+  font-style: normal;
+  color: #fafbfc;
+}
+h2 {
+  font-size: 2rem;
+  /* Slightly smaller than h1 */
+  letter-spacing: normal;
+  font-weight: 600;
+  font-style: normal;
+}
+h3 {
+  font-size: 1.75rem;
+  /* Smaller than h2 */
+  letter-spacing: normal;
+  font-weight: 600;
+  font-style: normal;
+}
+h4 {
+  font-size: 1.5rem;
+  /* Smaller than h3 */
+  letter-spacing: normal;
+  font-weight: 600;
+  font-style: normal;
+}
+h5 {
+  font-size: 1.25rem;
+  /* Smaller than h4 */
+  letter-spacing: normal;
+  font-weight: 600;
+  font-style: normal;
+}
+h6 {
+  font-size: 1rem;
+  /* Smallest heading */
+  letter-spacing: normal;
+  font-weight: 600;
+  font-style: normal;
+}
+body,
+head {
+  background: #2b3137;
+  color: #ffffff;
+}
+body .navbar,
+head .navbar {
+  background: #24292e;
+}
+body .navbar .container-fluid a:link,
+head .navbar .container-fluid a:link,
+body .navbar .container-fluid a:visited,
+head .navbar .container-fluid a:visited {
+  color: #ffffff;
+}
+body .navbar .container-fluid a:hover,
+head .navbar .container-fluid a:hover,
+body .navbar .container-fluid a:active,
+head .navbar .container-fluid a:active {
+  color: #2dba4e;
+}
+body .navbar .container-fluid .navbar-toggler,
+head .navbar .container-fluid .navbar-toggler {
+  margin: 0;
+  padding: 0;
+  display: block !important;
+  border: none;
+  color: #ffffff;
+}
+body .navbar .container-fluid .navbar-toggler:focus,
+head .navbar .container-fluid .navbar-toggler:focus,
+body .navbar .container-fluid .navbar-toggleractive,
+head .navbar .container-fluid .navbar-toggleractive {
+  outline: none;
+  box-shadow: none;
 }
 body .blinking-cursor-welcome,
 head .blinking-cursor-welcome {
@@ -33,7 +99,7 @@ head .blinking-cursor-welcome:after {
   content: '';
   width: 20px;
   height: 30px;
-  background: #ff79c6;
+  background: #2dba4e;
   display: inline-block;
   animation: cursor-blink 1.5s steps(2) infinite;
 }
@@ -48,31 +114,31 @@ head .container-fluid .navbar-brand:after {
   content: '';
   width: 10px;
   height: 20px;
-  background: #ff79c6;
+  background: #2dba4e;
   display: inline-block;
   animation: cursor-blink 1.5s steps(2) infinite;
 }
 body .container a:link,
 head .container a:link {
-  color: #abb2c0;
+  color: #ffffff;
   text-decoration: underline;
 }
 body .container a:visited,
 head .container a:visited {
-  color: #abb2c0;
+  color: #ffffff;
   text-decoration: underline;
 }
 body .container a:hover,
 head .container a:hover {
   border: none;
   text-decoration: none;
-  box-shadow: inset 0 -4px 0 #ff79c6;
+  box-shadow: inset 0 -4px 0 #2dba4e;
   transition-property: box-shadow;
   transition-duration: 0.1s;
 }
 body .container a:active,
 head .container a:active {
-  color: #abb2c0;
+  color: #ffffff;
   text-decoration: none;
 }
 body .container img,
@@ -100,4 +166,36 @@ head .container ol {
   list-style-type: disc;
   list-style-position: outside;
   margin-left: 1em;
+}
+/* FOOTER */
+footer {
+  margin: 0;
+  padding: 0;
+  background-color: #24292e;
+}
+footer .container p {
+  color: #ffffff;
+  font-size: 0.8rem;
+}
+footer .container .heading {
+  font-weight: 700;
+}
+footer .container i {
+  color: #2dba4e;
+}
+footer .container a:link,
+footer .container a:visited,
+footer .container a:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+footer .container a:active {
+  color: #ffffff;
+}
+footer .container .social-icons i {
+  color: #2dba4e;
+  margin-right: 5px;
+}
+footer .container .social-icons i:last-child {
+  margin-right: 0;
 }
