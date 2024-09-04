@@ -5,25 +5,25 @@
 <i class="bi bi-list"></i></button><div class="collapse navbar-collapse" id=navbar><ul class=navbar-nav><li class=nav-item><a class=nav-link href=/notes/ title>Notes</a></li><li class=nav-item><a class=nav-link href=/posts/ title>Posts</a></li></ul></div></div></nav><div class="container py-4 mx-auto" style=max-width:650px><h1>A Compact Scene Manager for TIC-80</h1><h6>September 3, 2024</h6><div class="row mt-4 my-4"><p><img src=image.png alt="alt text" title=TIC-80></p><p>In this post, I&rsquo;ll show you how to write a compact scene manager for your TIC-80
 games. Feel free to check out the code and let me know if you have any
 suggestions for further optimization!</p><p>You can play the TIC-80 cart online here:
-<a href="https://tic80.com/play?cart=3995">Play TIC-80 Cart</a></p><h2 id=code-in-lua>Code in Lua</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=c1>-- scene manager ---------------------------------------------------------------</span>
+<a href="https://tic80.com/play?cart=3995">Play TIC-80 Cart</a></p><h2 id=code-in-lua>Code in Lua</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=c1>-- scene manager</span>
 </span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nf>sceneManager</span><span class=p>()</span>
 </span></span><span class=line><span class=cl>	<span class=kr>return</span> <span class=p>{</span>
 </span></span><span class=line><span class=cl>		<span class=n>scenes</span> <span class=o>=</span> <span class=p>{},</span>
-</span></span><span class=line><span class=cl>		<span class=n>current_scene</span> <span class=o>=</span> <span class=kc>nil</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>		<span class=n>curr</span> <span class=o>=</span> <span class=kc>nil</span><span class=p>,</span>
 </span></span><span class=line><span class=cl>		<span class=n>register</span> <span class=o>=</span> <span class=kr>function</span><span class=p>(</span><span class=n>self</span><span class=p>,</span> <span class=n>s</span><span class=p>,</span> <span class=n>n</span><span class=p>)</span> <span class=n>self.scenes</span><span class=p>[</span><span class=n>n</span><span class=p>]</span> <span class=o>=</span> <span class=n>s</span> <span class=kr>end</span><span class=p>,</span>
 </span></span><span class=line><span class=cl>		<span class=n>switch</span> <span class=o>=</span> <span class=kr>function</span><span class=p>(</span><span class=n>self</span><span class=p>,</span> <span class=n>n</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>			<span class=n>self.current_scene</span> <span class=o>=</span> <span class=n>n</span>
+</span></span><span class=line><span class=cl>			<span class=n>self.curr</span> <span class=o>=</span> <span class=n>n</span>
 </span></span><span class=line><span class=cl>			<span class=n>self.scenes</span><span class=p>[</span><span class=n>n</span><span class=p>]:</span><span class=n>init</span><span class=p>()</span>
 </span></span><span class=line><span class=cl>		<span class=kr>end</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>		<span class=n>init</span> <span class=o>=</span> <span class=kr>function</span><span class=p>(</span><span class=n>self</span><span class=p>)</span> <span class=n>self.scenes</span><span class=p>[</span><span class=n>self.current_scene</span><span class=p>]:</span><span class=n>init</span><span class=p>()</span> <span class=kr>end</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>		<span class=n>update</span> <span class=o>=</span> <span class=kr>function</span><span class=p>(</span><span class=n>self</span><span class=p>)</span> <span class=n>self.scenes</span><span class=p>[</span><span class=n>self.current_scene</span><span class=p>]:</span><span class=n>update</span><span class=p>()</span> <span class=kr>end</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>		<span class=n>draw</span> <span class=o>=</span> <span class=kr>function</span><span class=p>(</span><span class=n>self</span><span class=p>)</span> <span class=n>self.scenes</span><span class=p>[</span><span class=n>self.current_scene</span><span class=p>]:</span><span class=n>draw</span><span class=p>()</span> <span class=kr>end</span>
+</span></span><span class=line><span class=cl>		<span class=n>init</span> <span class=o>=</span> <span class=kr>function</span><span class=p>(</span><span class=n>self</span><span class=p>)</span> <span class=n>self.scenes</span><span class=p>[</span><span class=n>self.curr</span><span class=p>]:</span><span class=n>init</span><span class=p>()</span> <span class=kr>end</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>		<span class=n>update</span> <span class=o>=</span> <span class=kr>function</span><span class=p>(</span><span class=n>self</span><span class=p>)</span> <span class=n>self.scenes</span><span class=p>[</span><span class=n>self.curr</span><span class=p>]:</span><span class=n>update</span><span class=p>()</span> <span class=kr>end</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>		<span class=n>draw</span> <span class=o>=</span> <span class=kr>function</span><span class=p>(</span><span class=n>self</span><span class=p>)</span> <span class=n>self.scenes</span><span class=p>[</span><span class=n>self.curr</span><span class=p>]:</span><span class=n>draw</span><span class=p>()</span> <span class=kr>end</span>
 </span></span><span class=line><span class=cl>	<span class=p>}</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=n>sMgr</span> <span class=o>=</span> <span class=n>sceneManager</span><span class=p>()</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=c1>-- menu scene ------------------------------------------------------------------</span>
+</span></span><span class=line><span class=cl><span class=c1>-- menu scene</span>
 </span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nf>Menu</span><span class=p>()</span>
 </span></span><span class=line><span class=cl>	<span class=kd>local</span> <span class=n>s</span> <span class=o>=</span> <span class=p>{}</span>
 </span></span><span class=line><span class=cl>
@@ -37,13 +37,13 @@ suggestions for further optimization!</p><p>You can play the TIC-80 cart online 
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>	<span class=kr>function</span> <span class=nc>s</span><span class=p>:</span><span class=nf>draw</span><span class=p>()</span>
 </span></span><span class=line><span class=cl>		<span class=n>cls</span><span class=p>(</span><span class=mi>0</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>    <span class=n>print</span><span class=p>(</span><span class=s2>&#34;&gt; Menu Scene ...&#34;</span><span class=p>,</span><span class=mi>0</span><span class=p>,</span><span class=mi>50</span><span class=p>,</span><span class=mi>4</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=n>print</span><span class=p>(</span><span class=s2>&#34;&gt; Menu Scene ...&#34;</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>50</span><span class=p>,</span> <span class=mi>4</span><span class=p>)</span>
 </span></span><span class=line><span class=cl>	<span class=kr>end</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>	<span class=kr>return</span> <span class=n>s</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=c1>-- game scene ------------------------------------------------------------------</span>
+</span></span><span class=line><span class=cl><span class=c1>-- game scene</span>
 </span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nf>Game</span><span class=p>()</span>
 </span></span><span class=line><span class=cl>	<span class=kd>local</span> <span class=n>s</span> <span class=o>=</span> <span class=p>{}</span>
 </span></span><span class=line><span class=cl>
@@ -52,25 +52,25 @@ suggestions for further optimization!</p><p>You can play the TIC-80 cart online 
 </span></span><span class=line><span class=cl>	<span class=kr>end</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>	<span class=kr>function</span> <span class=nc>s</span><span class=p>:</span><span class=nf>update</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>		 <span class=kr>if</span> <span class=n>btnp</span><span class=p>(</span><span class=mi>4</span><span class=p>)</span> <span class=kr>then</span> <span class=n>sMgr</span><span class=p>:</span><span class=n>switch</span><span class=p>(</span><span class=s2>&#34;Menu&#34;</span><span class=p>)</span> <span class=kr>end</span>
+</span></span><span class=line><span class=cl>		<span class=kr>if</span> <span class=n>btnp</span><span class=p>(</span><span class=mi>4</span><span class=p>)</span> <span class=kr>then</span> <span class=n>sMgr</span><span class=p>:</span><span class=n>switch</span><span class=p>(</span><span class=s2>&#34;Menu&#34;</span><span class=p>)</span> <span class=kr>end</span>
 </span></span><span class=line><span class=cl>	<span class=kr>end</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>	<span class=kr>function</span> <span class=nc>s</span><span class=p>:</span><span class=nf>draw</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>		 <span class=n>cls</span><span class=p>(</span><span class=mi>0</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>     <span class=n>print</span><span class=p>(</span><span class=s2>&#34;&gt; Game Scene ...&#34;</span><span class=p>,</span><span class=mi>0</span><span class=p>,</span><span class=mi>50</span><span class=p>,</span><span class=mi>3</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=n>cls</span><span class=p>(</span><span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=n>print</span><span class=p>(</span><span class=s2>&#34;&gt; Game Scene ...&#34;</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>50</span><span class=p>,</span> <span class=mi>3</span><span class=p>)</span>
 </span></span><span class=line><span class=cl>	<span class=kr>end</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>	<span class=kr>return</span> <span class=n>s</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=c1>-- init ------------------------------------------------------------------------</span>
+</span></span><span class=line><span class=cl><span class=c1>-- init</span>
 </span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nf>init</span><span class=p>()</span>
 </span></span><span class=line><span class=cl>	<span class=n>sMgr</span><span class=p>:</span><span class=n>register</span><span class=p>(</span><span class=n>Menu</span><span class=p>(),</span> <span class=s2>&#34;Menu&#34;</span><span class=p>)</span>
 </span></span><span class=line><span class=cl>	<span class=n>sMgr</span><span class=p>:</span><span class=n>register</span><span class=p>(</span><span class=n>Game</span><span class=p>(),</span> <span class=s2>&#34;Game&#34;</span><span class=p>)</span>
 </span></span><span class=line><span class=cl>	<span class=n>sMgr</span><span class=p>:</span><span class=n>switch</span><span class=p>(</span><span class=s2>&#34;Menu&#34;</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=kr>end</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=c1>-- main ------------------------------------------------------------------------</span>
+</span></span><span class=line><span class=cl><span class=c1>-- main</span>
 </span></span><span class=line><span class=cl><span class=n>init</span><span class=p>()</span>
 </span></span><span class=line><span class=cl><span class=kr>function</span> <span class=nf>TIC</span><span class=p>()</span>
 </span></span><span class=line><span class=cl>	<span class=n>sMgr</span><span class=p>:</span><span class=n>update</span><span class=p>()</span> <span class=c1>-- update scene</span>
